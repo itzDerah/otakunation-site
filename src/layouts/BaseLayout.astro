@@ -1,27 +1,94 @@
 ---
+import "@fontsource-variable/montserrat";
 import "../styles/global.css";
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "Otakunation",
-  description = "Otakunation corporate website.",
+  description = "Otakunation — the world's first anime nation.",
+  noindex = false,
 } = Astro.props;
+
+const pageTitle = title === "Otakunation" ? title : `${title} — Otakunation`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <title>{title}</title>
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#07060a" />
+
+    <!-- Set the theme before first paint to avoid a flash of the wrong palette. -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("otk-theme");
+          document.documentElement.dataset.theme = stored === "light" ? "light" : "dark";
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute(
+            "content",
+            document.documentElement.dataset.theme === "light" ? "#f7f4ef" : "#07060a",
+          );
+      })();
+    </script>
   </head>
-  <body class="min-h-screen antialiased">
+  <body class="min-h-dvh bg-bg text-text">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-text focus:shadow-raised"
+    >
+      Skip to content
+    </a>
+
     <slot />
+
+    <script is:inline>
+      (() => {
+        const label = (theme) =>
+          theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
+
+        const sync = () => {
+          document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+            const text = label(document.documentElement.dataset.theme);
+            button.setAttribute("aria-label", text);
+            button.setAttribute("title", text);
+          });
+        };
+
+        sync();
+
+        document.addEventListener("click", (event) => {
+          const button = event.target.closest("[data-theme-toggle]");
+          if (!button) return;
+
+          const next =
+            document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          document.documentElement.dataset.theme = next;
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", next === "light" ? "#f7f4ef" : "#07060a");
+          try {
+            localStorage.setItem("otk-theme", next);
+          } catch {}
+          sync();
+        });
+      })();
+    </script>
   </body>
 </html>

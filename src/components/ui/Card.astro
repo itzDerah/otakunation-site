@@ -1,0 +1,36 @@
+---
+interface Props {
+  as?: string;
+  variant?: "surface" | "raised" | "outline";
+  padding?: "none" | "sm" | "md" | "lg";
+  interactive?: boolean;
+  class?: string;
+}
+
+const {
+  as: Tag = "div",
+  variant = "surface",
+  padding = "md",
+  interactive = false,
+  class: className,
+} = Astro.props;
+
+const paddings = {
+  none: "",
+  sm: "p-4 sm:p-5",
+  md: "p-6 sm:p-7",
+  lg: "p-8 sm:p-10",
+} as const;
+---
+
+<Tag
+  class:list={[
+    "otk-card",
+    variant !== "surface" && `otk-card--${variant}`,
+    interactive && "otk-card--interactive",
+    paddings[padding],
+    className,
+  ]}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,56 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  options: Option[];
+  hint?: string;
+  error?: string;
+  required?: boolean;
+  disabled?: boolean;
+  name?: string;
+  placeholder?: string;
+  class?: string;
+}
+
+const {
+  id,
+  label,
+  options,
+  hint,
+  error,
+  required = false,
+  disabled = false,
+  placeholder,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const describedBy =
+  [hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(" ") || undefined;
+---
+
+<div class="flex flex-col gap-2">
+  <label for={id} class="otk-label">
+    {label}
+    {required && <span class="text-danger" aria-hidden="true"> *</span>}
+  </label>
+  <select
+    id={id}
+    required={required}
+    disabled={disabled}
+    aria-describedby={describedBy}
+    aria-invalid={error ? "true" : undefined}
+    class:list={["otk-input", error && "otk-input--invalid", className]}
+    {...rest}
+  >
+    {placeholder && <option value="">{placeholder}</option>}
+    {options.map((option) => <option value={option.value}>{option.label}</option>)}
+  </select>
+  {hint && <p id={`${id}-hint`} class="otk-help">{hint}</p>}
+  {error && <p id={`${id}-error`} class="otk-error">{error}</p>}
+</div>

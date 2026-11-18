@@ -1,0 +1,292 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Badge from "../components/ui/Badge.astro";
+import Button from "../components/ui/Button.astro";
+import Card from "../components/ui/Card.astro";
+import Checkbox from "../components/ui/Checkbox.astro";
+import Container from "../components/ui/Container.astro";
+import Input from "../components/ui/Input.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import Select from "../components/ui/Select.astro";
+import Textarea from "../components/ui/Textarea.astro";
+import SiteHeader from "../components/nav/SiteHeader.astro";
+
+const navLinks = [
+  { href: "#", label: "Home", current: true },
+  { href: "#colors", label: "Colours" },
+  { href: "#type", label: "Type" },
+  { href: "#components", label: "Components" },
+];
+
+const brandPalette = [
+  { name: "Ink 950", token: "ink-950", hex: "#07060A", className: "bg-ink-950" },
+  { name: "Ink 800", token: "ink-800", hex: "#15121B", className: "bg-ink-800" },
+  { name: "Crimson 500", token: "crimson-500", hex: "#D91F2E", className: "bg-crimson-500" },
+  { name: "Crimson 700", token: "crimson-700", hex: "#8E0F1B", className: "bg-crimson-700" },
+  { name: "Gold 500", token: "gold-500", hex: "#C09A54", className: "bg-gold-500" },
+  { name: "Gold 300", token: "gold-300", hex: "#E6CE9C", className: "bg-gold-300" },
+  { name: "Paper 100", token: "paper-100", hex: "#F7F4EF", className: "bg-paper-100" },
+];
+
+const semanticTokens = [
+  { name: "bg", utility: "bg-bg" },
+  { name: "bg-subtle", utility: "bg-bg-subtle" },
+  { name: "surface", utility: "bg-surface" },
+  { name: "surface-raised", utility: "bg-surface-raised" },
+  { name: "accent", utility: "bg-accent" },
+  { name: "danger", utility: "bg-danger" },
+  { name: "gold", utility: "bg-gold" },
+  { name: "text", utility: "bg-text" },
+  { name: "text-muted", utility: "bg-text-muted" },
+  { name: "border", utility: "bg-border" },
+];
+---
+
+<BaseLayout
+  title="Design system"
+  description="Internal reference for the Otakunation design foundation."
+  noindex
+>
+  <SiteHeader links={navLinks} />
+
+  <main id="main" tabindex="-1" class="focus:outline-none">
+    <Container>
+      <section class="otk-section flex flex-col gap-4">
+        <Badge>Internal · not indexed</Badge>
+        <h1 class="text-display-sm font-bold text-text">Design foundation</h1>
+        <p class="otk-lede">
+          Milestone 1 reference: tokens, typography, components and states. Toggle the theme
+          in the header to inspect both palettes. This page is a development aid and should
+          be removed or gated before launch.
+        </p>
+      </section>
+
+      <!-- Colours -->
+      <section id="colors" class="otk-section border-t border-border">
+        <SectionHeading
+          eyebrow="01 · Colour"
+          title="Brand palette"
+          lede="Fixed brand values sampled from the supplied references. Semantic tokens map them per theme."
+        />
+
+        <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {
+            brandPalette.map((colour) => (
+              <div class="overflow-hidden rounded-md border border-border">
+                <div class:list={["h-20", colour.className]} />
+                <div class="bg-surface p-3">
+                  <p class="text-sm font-semibold text-text">{colour.name}</p>
+                  <p class="text-xs text-text-subtle">
+                    {colour.hex} · {colour.token}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {
+            semanticTokens.map((token) => (
+              <div class="rounded-md border border-border bg-surface p-3">
+                <div class:list={["mb-2 h-10 rounded-xs border border-border", token.utility]} />
+                <p class="text-xs font-semibold text-text">{token.name}</p>
+                <p class="text-2xs text-text-subtle">{token.utility}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section id="type" class="otk-section border-t border-border">
+        <SectionHeading
+          eyebrow="02 · Type"
+          title="Typography"
+          lede="Montserrat Variable, self-hosted. Fluid display sizes scale with the viewport."
+        />
+
+        <div class="mt-10 flex flex-col gap-8">
+          <div class="flex flex-col gap-2">
+            <p class="otk-eyebrow">Display large · text-display-lg</p>
+            <p class="text-display-lg font-extrabold uppercase text-text">Anime Nation</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="otk-eyebrow">Display · text-display</p>
+            <p class="text-display font-extrabold uppercase text-text">One Nation</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="otk-eyebrow">Title · text-title</p>
+            <p class="text-title font-bold text-text">Infinite stories</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="otk-eyebrow">Lede · otk-lede</p>
+            <p class="otk-lede">
+              Body copy stays editorial and readable: Montserrat at a comfortable measure,
+              with muted colour for secondary text.
+            </p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="otk-eyebrow">Small · text-sm / text-xs</p>
+            <p class="text-sm text-text">Supporting detail and interface labels.</p>
+            <p class="text-xs text-text-subtle">Fine print and metadata.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section id="components" class="otk-section border-t border-border">
+        <SectionHeading
+          eyebrow="03 · Actions"
+          title="Buttons and links"
+          lede="Every control has a visible focus ring, a hover state, and a minimum 44px touch target."
+        />
+
+        <div class="mt-10 flex flex-col gap-8">
+          <div class="flex flex-wrap items-center gap-3">
+            <Button>Primary action</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="gold">Gold</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button disabled>Disabled</Button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <Button size="sm">Small</Button>
+            <Button size="md">Medium</Button>
+            <Button size="lg">Large</Button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <Button href="#" variant="secondary">Link styled as button</Button>
+            <Button href="#" variant="ghost">Inline link</Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section class="otk-section border-t border-border">
+        <SectionHeading
+          eyebrow="04 · Surfaces"
+          title="Cards and containers"
+          lede="Theme-aware surfaces. The interactive variant is reserved for content that navigates somewhere."
+        />
+
+        <div class="mt-10 grid gap-4 md:grid-cols-3">
+          <Card>
+            <h2 class="text-base font-semibold text-text">Default surface</h2>
+            <p class="mt-2 text-sm text-text-muted">
+              Base container for content blocks. Border and background both come from semantic
+              tokens, so it adapts to the active theme.
+            </p>
+          </Card>
+
+          <Card variant="raised">
+            <h2 class="text-base font-semibold text-text">Raised surface</h2>
+            <p class="mt-2 text-sm text-text-muted">
+              Higher elevation for emphasis or overlays, with a stronger shadow.
+            </p>
+          </Card>
+
+          <Card variant="outline" interactive>
+            <h2 class="text-base font-semibold text-text">Interactive outline</h2>
+            <p class="mt-2 text-sm text-text-muted">
+              Hover lifts the card and strengthens the border. Focus styles come from the global
+              ring.
+            </p>
+          </Card>
+        </div>
+      </section>
+
+      <!-- Forms -->
+      <section class="otk-section border-t border-border">
+        <SectionHeading
+          eyebrow="05 · Forms"
+          title="Form controls"
+          lede="Labels are always visible, hints and errors are programmatically associated, and invalid fields are announced."
+        />
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          <Card padding="lg">
+            <div class="flex flex-col gap-5">
+              <Input
+                id="demo-name"
+                name="demo-name"
+                label="Full name"
+                placeholder="Enter your name"
+                autocomplete="name"
+                required
+              />
+              <Input
+                id="demo-email"
+                name="demo-email"
+                type="email"
+                label="Email address"
+                placeholder="you@example.com"
+                hint="We only use this to contact you about Otakunation."
+                autocomplete="email"
+              />
+              <Input
+                id="demo-error"
+                name="demo-error"
+                label="Field with error"
+                value="not-an-email"
+                error="Enter a valid email address."
+              />
+            </div>
+          </Card>
+
+          <Card padding="lg">
+            <div class="flex flex-col gap-5">
+              <Select
+                id="demo-interest"
+                name="demo-interest"
+                label="Primary interest"
+                placeholder="Choose one"
+                options={[
+                  { value: "anime", label: "Anime" },
+                  { value: "manga", label: "Manga" },
+                  { value: "games", label: "Games" },
+                ]}
+              />
+              <Textarea
+                id="demo-message"
+                name="demo-message"
+                label="Message"
+                placeholder="Tell us what you are building"
+                rows={4}
+                hint="Optional. Keep it under 500 characters."
+              />
+              <Checkbox
+                id="demo-consent"
+                name="demo-consent"
+                label="Send me product updates"
+                hint="You can unsubscribe at any time."
+              />
+              <Button type="button" fullWidth>Submit</Button>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <!-- Motifs -->
+      <section class="otk-section border-y border-border">
+        <SectionHeading
+          eyebrow="06 · Motifs"
+          title="Angular accents"
+          lede="Red-to-gold geometry is used sparingly as a signature detail, never as decoration for its own sake."
+          align="center"
+        />
+
+        <div class="mt-10 flex flex-col items-center gap-8">
+          <span class="otk-rule" aria-hidden="true"></span>
+          <div class="flex flex-wrap justify-center gap-3">
+            <Badge>Early access</Badge>
+            <Badge>Partnerships</Badge>
+            <Badge>Creators</Badge>
+          </div>
+        </div>
+      </section>
+    </Container>
+  </main>
+</BaseLayout>

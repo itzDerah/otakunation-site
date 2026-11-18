@@ -1,0 +1,17 @@
+---
+interface Props {
+  href: string;
+  current?: boolean;
+  class?: string;
+}
+
+const { href, current = false, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  aria-current={current ? "page" : undefined}
+  class:list={["otk-nav-link", className]}
+>
+  <slot />
+</a>

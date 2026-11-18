@@ -1,12 +1,34 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Badge from "../components/ui/Badge.astro";
+import Container from "../components/ui/Container.astro";
+import Crest from "../components/brand/Crest.astro";
+import SiteHeader from "../components/nav/SiteHeader.astro";
 ---
 
-<BaseLayout title="Otakunation">
-  <main class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-3 px-6">
-    <h1 class="text-2xl font-semibold tracking-tight">Otakunation</h1>
-    <p class="text-sm text-neutral-600 dark:text-neutral-400">
-      Corporate website foundation. Design and content are pending brand assets.
-    </p>
+<BaseLayout description="Otakunation — the world's first anime nation. Corporate website in development.">
+  <SiteHeader />
+
+  <main id="main" tabindex="-1" class="focus:outline-none">
+    <Container>
+      <section class="otk-section flex flex-col items-start gap-6">
+        <Badge>Foundation build</Badge>
+
+        <Crest class="h-24 sm:h-28" />
+
+        <h1 class="text-display font-extrabold uppercase text-text">
+          Otakunation
+        </h1>
+
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold sm:text-sm">
+          The World&rsquo;s First Anime Nation
+        </p>
+
+        <p class="otk-lede">
+          Corporate website in development. The brand identity and design system are in
+          place; page structure and content are pending approval.
+        </p>
+      </section>
+    </Container>
   </main>
 </BaseLayout>

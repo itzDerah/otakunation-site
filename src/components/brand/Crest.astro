@@ -1,0 +1,37 @@
+---
+/**
+ * Official Otakunation crest.
+ *
+ * These are the supplied crest artwork, cropped from the official dark and light
+ * lockups and exported with transparency. Never redraw, recolour or distort the
+ * mark — replace the files in `public/brand/` if the brand team issues new ones.
+ */
+interface Props {
+  alt?: string;
+  class?: string;
+  loading?: "eager" | "lazy";
+}
+
+const { alt = "", class: className, loading = "eager" } = Astro.props;
+---
+
+<img
+  src="/brand/crest-dark.png"
+  alt={alt}
+  width="176"
+  height="240"
+  loading={loading}
+  decoding="async"
+  fetchpriority={loading === "eager" ? "high" : undefined}
+  class:list={["hidden w-auto dark:block", className]}
+/>
+<img
+  src="/brand/crest-light.png"
+  alt={alt}
+  width="180"
+  height="240"
+  loading={loading}
+  decoding="async"
+  fetchpriority={loading === "eager" ? "high" : undefined}
+  class:list={["w-auto dark:hidden", className]}
+/>

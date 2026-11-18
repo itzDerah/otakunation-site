@@ -1,0 +1,47 @@
+---
+interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "gold";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  fullWidth?: boolean;
+  class?: string;
+  id?: string;
+  target?: string;
+  rel?: string;
+  "aria-label"?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  disabled = false,
+  fullWidth = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class:list={[
+    "otk-btn",
+    `otk-btn--${variant}`,
+    size !== "md" && `otk-btn--${size}`,
+    fullWidth && "w-full",
+    className,
+  ]}
+  href={href}
+  type={href ? undefined : type}
+  disabled={href ? undefined : disabled}
+  aria-disabled={disabled ? "true" : undefined}
+  {...rest}
+>
+  <slot name="icon" />
+  <slot />
+  <slot name="trailing" />
+</Tag>

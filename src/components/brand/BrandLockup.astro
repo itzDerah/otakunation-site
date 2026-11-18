@@ -1,0 +1,26 @@
+---
+import BrandText from "./BrandText.astro";
+import Crest from "./Crest.astro";
+
+/**
+ * Header brand lockup: official crest + wordmark.
+ * The tagline is omitted by default to keep the masthead compact; use
+ * `compact={false}` where vertical space allows.
+ */
+interface Props {
+  compact?: boolean;
+  crestClass?: string;
+  class?: string;
+}
+
+const {
+  compact = true,
+  crestClass = "h-9 sm:h-10",
+  class: className,
+} = Astro.props;
+---
+
+<span class:list={["flex items-center gap-2.5 sm:gap-3", className]}>
+  <Crest class={crestClass} />
+  <BrandText compact={compact} />
+</span>

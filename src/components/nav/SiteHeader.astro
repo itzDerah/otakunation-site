@@ -1,0 +1,71 @@
+---
+import { Menu } from "@lucide/astro";
+import BrandLockup from "../brand/BrandLockup.astro";
+import NavLink from "./NavLink.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface NavItem {
+  href: string;
+  label: string;
+  current?: boolean;
+}
+
+interface Props {
+  links?: NavItem[];
+  brandHref?: string;
+}
+
+const { links = [], brandHref = "/" } = Astro.props;
+---
+
+<header class="border-b border-border bg-bg">
+  <div class="otk-container flex min-h-18 items-center justify-between gap-4">
+    <a href={brandHref} class="rounded-sm py-2" aria-label="Otakunation home">
+      <BrandLockup />
+    </a>
+
+    {
+      links.length > 0 && (
+        <nav class="hidden md:block" aria-label="Primary">
+          <ul class="flex items-center gap-1">
+            {links.map((link) => (
+              <li>
+                <NavLink href={link.href} current={link.current}>
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle />
+
+      {
+        links.length > 0 && (
+          <details class="relative md:hidden">
+            <summary class="otk-icon-btn list-none [&::-webkit-details-marker]:hidden">
+              <Menu class="size-5" aria-hidden="true" />
+              <span class="sr-only">Menu</span>
+            </summary>
+            <div class="absolute right-0 z-20 mt-2 w-56 rounded-lg border border-border bg-surface p-2 shadow-raised">
+              <nav aria-label="Mobile">
+                <ul class="flex flex-col">
+                  {links.map((link) => (
+                    <li>
+                      <NavLink href={link.href} current={link.current} class="w-full">
+                        {link.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </details>
+        )
+      }
+    </div>
+  </div>
+</header>

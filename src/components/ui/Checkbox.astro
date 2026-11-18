@@ -1,0 +1,43 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  hint?: string;
+  checked?: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  name?: string;
+  value?: string;
+  class?: string;
+}
+
+const {
+  id,
+  label,
+  hint,
+  checked = false,
+  required = false,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const describedBy = hint ? `${id}-hint` : undefined;
+---
+
+<div class:list={["flex items-start gap-3", className]}>
+  <input
+    id={id}
+    type="checkbox"
+    checked={checked}
+    required={required}
+    disabled={disabled}
+    aria-describedby={describedBy}
+    class="otk-checkbox mt-0.5"
+    {...rest}
+  />
+  <div class="flex flex-col gap-1">
+    <label for={id} class="text-sm font-medium text-text">{label}</label>
+    {hint && <p id={`${id}-hint`} class="otk-help">{hint}</p>}
+  </div>
+</div>

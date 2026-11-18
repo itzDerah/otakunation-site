@@ -1,0 +1,19 @@
+---
+interface Props {
+  as?: string;
+  size?: "page" | "narrow";
+  class?: string;
+}
+
+const { as: Tag = "div", size = "page", class: className } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "mx-auto w-full px-5 sm:px-6 lg:px-8",
+    size === "page" ? "max-w-page" : "max-w-narrow",
+    className,
+  ]}
+>
+  <slot />
+</Tag>

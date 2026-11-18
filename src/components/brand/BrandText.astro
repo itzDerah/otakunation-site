@@ -1,0 +1,25 @@
+---
+/**
+ * Text-only wordmark set in Montserrat.
+ *
+ * The official crest lives in `Crest.astro` and is composed with this wordmark by
+ * `BrandLockup.astro`. Do not draw a substitute mark.
+ */
+interface Props {
+  compact?: boolean;
+  class?: string;
+}
+
+const { compact = false, class: className } = Astro.props;
+---
+
+<span class:list={["flex flex-col gap-1", className]}>
+  <span class="text-base leading-none font-extrabold tracking-[0.01em] uppercase text-text sm:text-lg">
+    Otakunation
+  </span>
+  {!compact && (
+    <span class="text-[0.6rem] leading-none font-semibold tracking-[0.22em] uppercase text-text-subtle">
+      The World&rsquo;s First Anime Nation
+    </span>
+  )}
+</span>
