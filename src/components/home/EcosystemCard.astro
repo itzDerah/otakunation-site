@@ -1,0 +1,253 @@
+---
+import {
+  Clapperboard,
+  Crown,
+  Gamepad2,
+  PenLine,
+  Store,
+  Users,
+} from "@lucide/astro";
+import Badge from "../ui/Badge.astro";
+import type { EcosystemArea } from "../../data/ecosystem";
+
+interface Props {
+  area: EcosystemArea;
+  class?: string;
+}
+
+const { area, class: className } = Astro.props;
+
+const icons = {
+  clapperboard: Clapperboard,
+  users: Users,
+  crown: Crown,
+  pen: PenLine,
+  gamepad: Gamepad2,
+  store: Store,
+} as const;
+
+const Icon = icons[area.icon];
+const isFeature = area.layout === "feature";
+const isWide = area.layout === "wide";
+const pixels = Array.from({ length: 16 }, (_, index) => index);
+const hotPixels = new Set([2, 5, 6, 9, 13]);
+---
+
+<article
+  id={area.id}
+  aria-labelledby={`${area.id}-title`}
+  class:list={[
+    "otk-corners group relative flex overflow-hidden border border-border bg-surface",
+    isFeature && "flex-col gap-7 p-6 sm:p-8 lg:flex-row lg:items-stretch lg:gap-8",
+    isWide && "flex-col gap-7 p-6 sm:p-8 md:flex-row md:items-center md:gap-8",
+    !isFeature &&
+      !isWide &&
+      "min-h-[19rem] flex-col gap-6 p-6 pb-24 sm:p-7 sm:pb-24",
+    className,
+  ]}
+>
+  <div
+    class:list={[
+      "relative z-10 flex min-w-0 flex-col",
+      (isFeature || isWide) && "flex-1 justify-between",
+    ]}
+  >
+    <div>
+      <div class="flex items-center justify-between gap-4">
+        <span class="text-[0.65rem] font-bold tracking-[0.2em] text-gold uppercase">
+          {area.number} / Area
+        </span>
+        <Badge tone="neutral">{area.status}</Badge>
+      </div>
+
+      <div class="mt-7 flex items-center gap-4">
+        <span
+          class="grid size-11 shrink-0 place-items-center border border-gold/30 bg-gold/5 text-gold"
+        >
+          <Icon class="size-5" aria-hidden="true" />
+        </span>
+        <div class="min-w-0">
+          <h3
+            id={`${area.id}-title`}
+            class="text-xl font-bold tracking-tight text-text"
+          >
+            {area.title}
+          </h3>
+          <p
+            class="mt-1 text-[0.65rem] font-semibold tracking-[0.16em] text-text-subtle uppercase"
+          >
+            {area.tagline}
+          </p>
+        </div>
+      </div>
+
+      <p
+        class:list={[
+          "mt-5 max-w-prose text-sm leading-relaxed text-text-muted",
+          isFeature && "lg:max-w-sm",
+        ]}
+      >
+        {area.description}
+      </p>
+
+      {
+        area.key === "community" && (
+          <p class="mt-6 border-l-2 border-accent pl-3 text-xs leading-relaxed font-semibold tracking-[0.12em] text-text-subtle uppercase">
+            A nation is its people.
+          </p>
+        )
+      }
+    </div>
+
+    {
+      (isFeature || isWide) && (
+        <p class="mt-8 flex items-center gap-2 text-2xs font-semibold uppercase text-text-subtle">
+          <span class="otk-status-dot" aria-hidden="true" />
+          Part of the planned ecosystem
+        </p>
+      )
+    }
+  </div>
+
+  {
+    isFeature && (
+      <div
+        class="relative z-0 min-h-60 w-full overflow-hidden border border-border bg-ink-950 [--otk-gold:#C09A54] lg:min-h-full lg:w-[44%]"
+        aria-hidden="true"
+      >
+        <div class="absolute inset-0 otk-grid-lines text-white/10" />
+        <span class="absolute top-4 left-4 text-[0.55rem] font-semibold tracking-[0.22em] text-gold uppercase">
+          Frame study / 01
+        </span>
+        <span class="absolute right-4 bottom-2 text-7xl leading-none font-extrabold text-white/10">
+          01
+        </span>
+
+        <div class="absolute inset-0 grid place-items-center">
+          <div class="relative h-[68%] w-[82%]">
+            <div class="absolute top-[8%] left-0 h-[62%] w-[42%] -rotate-6 border border-gold/40 bg-ink-800 p-1.5">
+              <div class="h-[65%] bg-crimson-700" />
+              <div class="mt-2 h-px w-8 bg-gold/70" />
+              <div class="mt-1.5 h-px w-5 bg-white/25" />
+            </div>
+
+            <div class="absolute top-[20%] left-[29%] h-[62%] w-[42%] rotate-2 border border-white/20 bg-ink-700 p-1.5">
+              <div class="relative grid h-[65%] place-items-center bg-ink-900">
+                <span class="size-8 rounded-full border border-gold/50" />
+                <span class="absolute size-1.5 rounded-full bg-accent" />
+              </div>
+              <div class="mt-2 h-px w-10 bg-white/20" />
+            </div>
+
+            <div class="absolute top-[14%] right-0 h-[58%] w-[34%] rotate-[9deg] border border-gold/25 bg-ink-800 p-1.5">
+              <div class="flex h-[65%] flex-col justify-end gap-1 bg-ink-900 p-2">
+                <span class="h-1 w-full bg-gold/40" />
+                <span class="h-1 w-2/3 bg-accent/70" />
+                <span class="h-1 w-1/2 bg-white/15" />
+              </div>
+              <div class="mt-2 h-px w-6 bg-gold/40" />
+            </div>
+          </div>
+        </div>
+
+        <span class="absolute bottom-4 left-4 text-[0.55rem] tracking-[0.18em] text-paper-300 uppercase">
+          Anime / Manga
+        </span>
+      </div>
+    )
+  }
+
+  {
+    isWide && (
+      <div
+        class="relative h-48 w-full overflow-hidden border border-border bg-ink-950 [--otk-gold:#C09A54] md:h-44 md:w-[36%]"
+        aria-hidden="true"
+      >
+        <div class="absolute inset-0 otk-grid-lines text-white/10" />
+        <span class="absolute top-4 left-4 text-[0.55rem] font-semibold tracking-[0.22em] text-gold uppercase">
+          Market study / 06
+        </span>
+        <span class="absolute right-4 bottom-1 text-7xl leading-none font-extrabold text-white/10">
+          06
+        </span>
+
+        <span class="absolute top-[38%] left-[9%] -rotate-6 border border-gold/40 bg-ink-800 px-3 py-2 text-[0.55rem] font-semibold tracking-[0.18em] text-paper-300 uppercase">
+          Fan-made
+        </span>
+        <span class="absolute top-[26%] left-[36%] rotate-3 border border-white/20 bg-ink-700 px-3 py-2 text-[0.55rem] font-semibold tracking-[0.18em] text-gold uppercase">
+          Indie
+        </span>
+        <span class="absolute top-[52%] left-[52%] -rotate-2 border border-gold/30 bg-accent/80 px-3 py-2 text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase">
+          Culture
+        </span>
+      </div>
+    )
+  }
+
+  {
+    area.key === "community" && (
+      <svg
+        class="absolute right-4 bottom-4 h-24 w-32 text-gold"
+        viewBox="0 0 160 120"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M18 92 L54 54 L94 76 L138 28"
+          stroke="currentColor"
+          stroke-opacity=".45"
+        />
+        <path d="M18 92 L94 76 L138 28" stroke="#D91F2E" stroke-opacity=".55" />
+        <circle cx="18" cy="92" r="4" fill="#D91F2E" />
+        <circle cx="54" cy="54" r="3" fill="#C09A54" />
+        <circle cx="94" cy="76" r="4" fill="#C09A54" />
+        <circle cx="138" cy="28" r="3" fill="#F7F4EF" fill-opacity=".7" />
+      </svg>
+    )
+  }
+
+  {
+    area.key === "guilds" && (
+      <div
+        class="absolute right-4 bottom-3 flex items-end gap-2"
+        aria-hidden="true"
+      >
+        <span class="h-16 w-7 border border-gold/30 bg-accent/80 [clip-path:polygon(0_0,100%_0,100%_78%,50%_100%,0_78%)]" />
+        <span class="h-12 w-7 border border-gold/30 bg-gold/70 [clip-path:polygon(0_0,100%_0,100%_78%,50%_100%,0_78%)]" />
+        <span class="h-9 w-7 border border-white/20 bg-paper-100/20 [clip-path:polygon(0_0,100%_0,100%_78%,50%_100%,0_78%)]" />
+      </div>
+    )
+  }
+
+  {
+    area.key === "creators" && (
+      <div class="absolute right-4 bottom-4 flex items-end" aria-hidden="true">
+        <span class="size-14 -rotate-6 border border-gold/40 bg-ink-900" />
+        <span class="-ml-5 size-14 rotate-3 border border-border bg-accent/80" />
+        <span class="-ml-5 size-14 rotate-12 border border-gold/30 bg-gold/25" />
+      </div>
+    )
+  }
+
+  {
+    area.key === "gaming" && (
+      <div
+        class="absolute right-4 bottom-4 grid grid-cols-4 gap-1"
+        aria-hidden="true"
+      >
+        {pixels.map((pixel) => (
+          <span
+            class:list={[
+              "size-2",
+              hotPixels.has(pixel)
+                ? "bg-accent/80"
+                : pixel % 3 === 0
+                  ? "bg-gold/60"
+                  : "bg-text/10",
+            ]}
+          />
+        ))}
+      </div>
+    )
+  }
+</article>

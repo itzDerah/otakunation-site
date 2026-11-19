@@ -62,6 +62,14 @@
   --text-title--line-height: 1.15;
   --text-title--letter-spacing: -0.02em;
 
+  --text-heading: clamp(2rem, 4.4vw, 3.25rem);
+  --text-heading--line-height: 1.05;
+  --text-heading--letter-spacing: -0.03em;
+
+  --text-hero: clamp(2.2rem, 7.2vw, 5.5rem);
+  --text-hero--line-height: 0.92;
+  --text-hero--letter-spacing: -0.045em;
+
   /* Spacing additions on top of Tailwind's 4px scale */
   --spacing-section: clamp(4rem, 9vw, 7.5rem);
   --spacing-gutter: clamp(1.25rem, 4vw, 2rem);
@@ -129,7 +137,7 @@
   --otk-border-strong: #c4b8a4;
   --otk-text: #14100a;
   --otk-text-muted: #55505f;
-  --otk-text-subtle: #6e6878;
+  --otk-text-subtle: #68616f;
   --otk-accent: #b81522;
   --otk-accent-hover: #8e0f1b;
   --otk-danger: #b81522;
@@ -172,6 +180,11 @@
   body {
     @apply bg-bg font-sans text-text antialiased;
     text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+  }
+
+  [id] {
+    scroll-margin-top: 6rem;
   }
 
   ::selection {
@@ -225,6 +238,91 @@
   /* Brand furniture ------------------------------------------------ */
   .otk-eyebrow {
     @apply text-2xs font-semibold uppercase text-gold;
+  }
+
+  .otk-eyebrow-line {
+    @apply flex items-center gap-3;
+  }
+
+  .otk-eyebrow-line::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    flex: none;
+    background: var(--otk-gold);
+  }
+
+  .otk-text-link {
+    @apply inline-flex items-center gap-2 border-b border-gold/50 pb-1
+      text-sm font-semibold text-text transition-colors duration-200
+      hover:border-gold hover:text-gold;
+  }
+
+  .otk-text-link--ink {
+    @apply border-ink-950/40 text-ink-950 hover:border-ink-950 hover:text-ink-950;
+  }
+
+  .otk-status-dot {
+    @apply inline-block size-1.5 shrink-0 rounded-full bg-gold;
+  }
+
+  /* Editorial surfaces --------------------------------------------- */
+  .otk-panel {
+    @apply relative border border-border bg-surface;
+  }
+
+  .otk-corners {
+    position: relative;
+  }
+
+  .otk-corners::before,
+  .otk-corners::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-color: var(--otk-gold);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .otk-corners::before {
+    inset: 0 auto auto 0;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+
+  .otk-corners::after {
+    inset: auto 0 0 auto;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+  }
+
+  .otk-grid-lines {
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 3rem 3rem;
+    mask-image: radial-gradient(ellipse at center, #000 16%, transparent 76%);
+  }
+
+  .otk-vertical-label {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.35em;
+  }
+
+  /* Slow, decorative orbital ring. Disabled by the global reduced-motion rule. */
+  .otk-orbit-spin {
+    animation: otk-orbit 90s linear infinite;
+    transform-box: view-box;
+    transform-origin: center;
+  }
+
+  @keyframes otk-orbit {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* Angular red→gold rule used under headings and as a section marker */
@@ -281,6 +379,14 @@
     box-shadow: var(--shadow-glow-gold);
   }
 
+  .otk-btn--inverse {
+    @apply bg-bg text-text hover:bg-surface;
+  }
+
+  .otk-btn--onaccent {
+    @apply border border-white/40 bg-transparent text-white hover:bg-white/10;
+  }
+
   .otk-btn--secondary {
     @apply border border-border-strong bg-transparent text-text hover:bg-surface;
   }
@@ -325,6 +431,18 @@
   }
 
   /* Navigation ------------------------------------------------------ */
+  .otk-menu-close {
+    display: none;
+  }
+
+  details[open] .otk-menu-close {
+    display: block;
+  }
+
+  details[open] .otk-menu-open {
+    display: none;
+  }
+
   .otk-nav-link {
     @apply relative inline-flex min-h-11 items-center px-3 text-sm font-medium
       text-text-muted transition-colors duration-200 hover:text-text;
@@ -337,6 +455,18 @@
   .otk-nav-link[aria-current="page"]::after {
     content: "";
     @apply absolute inset-x-3 bottom-1.5 h-0.5 bg-gold;
+  }
+
+  /* Six links plus a CTA need a compact tier between lg and xl. */
+  @media (min-width: 64rem) and (max-width: 79.999rem) {
+    .otk-header-nav .otk-nav-link {
+      padding-inline: 0.5rem;
+      font-size: 0.8125rem;
+    }
+
+    .otk-header-nav .otk-nav-link[aria-current="page"]::after {
+      inset-inline: 0.5rem;
+    }
   }
 
   /* Forms ----------------------------------------------------------- */

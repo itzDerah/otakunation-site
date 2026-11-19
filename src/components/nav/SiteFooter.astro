@@ -1,0 +1,139 @@
+---
+import { ArrowUp } from "@lucide/astro";
+import BrandLockup from "../brand/BrandLockup.astro";
+import Container from "../ui/Container.astro";
+import { ecosystemLinks } from "../../data/ecosystem";
+import { site } from "../../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border bg-bg-subtle">
+  <Container class="py-14 sm:py-16">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-4">
+        <a href="#top" class="inline-block rounded-sm">
+          <BrandLockup compact={false} crestClass="h-12" />
+        </a>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-text-muted">
+          {site.footerDescription}
+        </p>
+        <p
+          class="mt-5 inline-flex items-center gap-2 text-2xs font-semibold uppercase text-text-subtle"
+        >
+          <span class="otk-status-dot" aria-hidden="true"></span>
+          {site.status}
+        </p>
+      </div>
+
+      <nav class="lg:col-span-2" aria-label="Footer">
+        <h2 class="otk-eyebrow">Explore</h2>
+        <ul class="mt-4 space-y-1">
+          {
+            site.nav.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="inline-flex min-h-9 items-center text-sm text-text-muted transition-colors hover:text-text"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="lg:col-span-3" aria-label="Ecosystem">
+        <h2 class="otk-eyebrow">Ecosystem</h2>
+        <ul class="mt-4 space-y-1">
+          {
+            ecosystemLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="inline-flex min-h-9 items-center text-sm text-text-muted transition-colors hover:text-text"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div id="contact" class="lg:col-span-3">
+        <h2 class="otk-eyebrow">Contact</h2>
+        <p class="mt-4 text-sm leading-relaxed text-text-muted">{site.contact.note}</p>
+
+        {
+          site.contact.email && (
+            <a
+              href={`mailto:${site.contact.email}`}
+              class="mt-4 inline-flex min-h-9 items-center text-sm font-semibold text-text underline decoration-gold/60 underline-offset-4 hover:text-gold"
+            >
+              {site.contact.email}
+            </a>
+          )
+        }
+
+        {
+          site.socials.length > 0 ? (
+            <ul class="mt-5 space-y-2">
+              {site.socials.map((social) => (
+                <li>
+                  <a
+                    href={social.href}
+                    class="inline-flex min-h-9 items-center text-sm text-text-muted transition-colors hover:text-text"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {social.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="mt-4 text-xs leading-relaxed text-text-subtle">
+              No verified social channels are published yet.
+            </p>
+          )
+        }
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-4 border-t border-border pt-6 text-xs text-text-subtle sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {year} Otakunation. All rights reserved.</p>
+
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {
+          site.legal.privacyUrl ? (
+            <a href={site.legal.privacyUrl} class="hover:text-text">
+              Privacy policy
+            </a>
+          ) : (
+            <span>Privacy policy — pending</span>
+          )
+        }
+        {
+          site.legal.termsUrl ? (
+            <a href={site.legal.termsUrl} class="hover:text-text">
+              Terms of use
+            </a>
+          ) : (
+            <span>Terms of use — pending</span>
+          )
+        }
+        <a
+          href="#top"
+          class="inline-flex min-h-9 items-center gap-1 text-text-muted transition-colors hover:text-text"
+        >
+          Back to top
+          <ArrowUp class="size-3.5" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </Container>
+</footer>

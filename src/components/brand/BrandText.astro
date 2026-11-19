@@ -14,7 +14,7 @@ const { compact = false, class: className } = Astro.props;
 ---
 
 <span class:list={["flex flex-col gap-1", className]}>
-  <span class="text-base leading-none font-extrabold tracking-[0.01em] uppercase text-text sm:text-lg">
+  <span class="text-base leading-none font-extrabold tracking-[0.01em] uppercase text-text whitespace-nowrap sm:text-lg">
     Otakunation
   </span>
   {!compact && (

@@ -5,6 +5,7 @@ interface Props {
   lede?: string;
   as?: "h1" | "h2" | "h3";
   align?: "start" | "center";
+  size?: "default" | "lg";
   id?: string;
   class?: string;
 }
@@ -15,6 +16,7 @@ const {
   lede,
   as: Tag = "h2",
   align = "start",
+  size = "default",
   id,
   class: className,
 } = Astro.props;
@@ -30,7 +32,10 @@ const {
   {eyebrow && <p class="otk-eyebrow">{eyebrow}</p>}
   <Tag
     id={id}
-    class:list={["text-title font-bold text-text", align === "center" && "text-balance"]}
+    class:list={[
+      size === "lg" ? "text-heading" : "text-title",
+      "text-balance font-bold text-text",
+    ]}
   >
     {title}
   </Tag>

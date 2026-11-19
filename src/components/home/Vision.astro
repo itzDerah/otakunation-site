@@ -1,0 +1,82 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import Container from "../ui/Container.astro";
+
+const principles = [
+  {
+    number: "01",
+    title: "Belonging first",
+    body: "A nation is its people. Every part of the vision starts with community, not features.",
+  },
+  {
+    number: "02",
+    title: "Culture, not content",
+    body: "Anime is the shared language. Otakunation is where that language becomes connection.",
+  },
+  {
+    number: "03",
+    title: "Open horizons",
+    body: "African-founded and globally minded — built for Otakus wherever they are.",
+  },
+];
+---
+
+<section id="vision" class="otk-section border-b border-border" aria-labelledby="vision-title">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-5">
+        <SectionHeading
+          eyebrow="What we're building"
+          title="A home for the culture that raised us."
+          as="h2"
+          id="vision-title"
+          size="lg"
+        />
+
+        <p class="mt-8 max-w-narrow text-base leading-relaxed text-text-muted">
+          Otakunation is a digital nation for Otakus: one connected home for anime and
+          manga, community, creativity and play.
+        </p>
+
+        <blockquote
+          class="mt-8 border-l-2 border-accent pl-5 text-base font-semibold leading-relaxed text-text sm:text-lg"
+        >
+          “The vision is simple: bring enthusiasts together across borders, give creators
+          a place to be seen, and build a culture-first ecosystem that belongs to the
+          people who shape it.”
+        </blockquote>
+      </div>
+
+      <div class="lg:col-span-6 lg:col-start-7">
+        <p class="text-base leading-relaxed text-text-muted sm:text-lg">
+          Fandom has always crossed borders. It has given us stories to argue about,
+          characters to grow up with and communities that formed long before a platform
+          ever tried to organise them.
+        </p>
+        <p class="mt-5 text-sm leading-relaxed text-text-muted sm:text-base">
+          Otakunation is being designed as the place that culture deserves — not another
+          feed to scroll, but a connected nation where discovery, friendship, creativity
+          and community reinforce one another.
+        </p>
+
+        <ol class="mt-10 border-t border-border">
+          {
+            principles.map((principle) => (
+              <li class="grid gap-2 border-b border-border py-5 sm:grid-cols-[3rem_1fr] sm:gap-4">
+                <span class="font-display text-xs font-bold tracking-[0.18em] text-gold">
+                  {principle.number}
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-text">{principle.title}</h3>
+                  <p class="mt-1.5 max-w-prose text-sm leading-relaxed text-text-muted">
+                    {principle.body}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </Container>
+</section>

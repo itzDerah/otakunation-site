@@ -1,5 +1,5 @@
 ---
-import { Menu } from "@lucide/astro";
+import { ArrowRight, Menu, X } from "@lucide/astro";
 import BrandLockup from "../brand/BrandLockup.astro";
 import NavLink from "./NavLink.astro";
 import ThemeToggle from "./ThemeToggle.astro";
@@ -13,21 +13,28 @@ interface NavItem {
 interface Props {
   links?: NavItem[];
   brandHref?: string;
+  cta?: {
+    href: string;
+    label: string;
+  };
 }
 
-const { links = [], brandHref = "/" } = Astro.props;
+const { links = [], brandHref = "/", cta } = Astro.props;
 ---
 
-<header class="border-b border-border bg-bg">
-  <div class="otk-container flex min-h-18 items-center justify-between gap-4">
-    <a href={brandHref} class="rounded-sm py-2" aria-label="Otakunation home">
+<header
+  id="top"
+  class="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/85"
+>
+  <div class="otk-container relative flex min-h-18 items-center justify-between gap-3">
+    <a href={brandHref} class="min-w-0 rounded-sm py-2" aria-label="Otakunation home">
       <BrandLockup />
     </a>
 
     {
       links.length > 0 && (
-        <nav class="hidden md:block" aria-label="Primary">
-          <ul class="flex items-center gap-1">
+        <nav class="otk-header-nav hidden lg:block" aria-label="Primary">
+          <ul class="flex items-center">
             {links.map((link) => (
               <li>
                 <NavLink href={link.href} current={link.current}>
@@ -40,32 +47,100 @@ const { links = [], brandHref = "/" } = Astro.props;
       )
     }
 
-    <div class="flex items-center gap-2">
+    <div class="flex shrink-0 items-center gap-2">
       <ThemeToggle />
 
       {
+        cta && (
+          <a href={cta.href} class="otk-btn otk-btn--primary otk-btn--sm hidden lg:inline-flex">
+            {cta.label}
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </a>
+        )
+      }
+
+      {
         links.length > 0 && (
-          <details class="relative md:hidden">
+          <details class="relative lg:hidden" data-site-menu>
             <summary class="otk-icon-btn list-none [&::-webkit-details-marker]:hidden">
-              <Menu class="size-5" aria-hidden="true" />
+              <Menu class="otk-menu-open size-5" aria-hidden="true" />
+              <X class="otk-menu-close size-5" aria-hidden="true" />
               <span class="sr-only">Menu</span>
             </summary>
-            <div class="absolute right-0 z-20 mt-2 w-56 rounded-lg border border-border bg-surface p-2 shadow-raised">
+
+            <div class="absolute top-[calc(100%+1rem)] right-0 z-30 w-[min(20rem,calc(100vw-2.5rem))] border border-border bg-bg p-2 shadow-raised">
               <nav aria-label="Mobile">
                 <ul class="flex flex-col">
                   {links.map((link) => (
                     <li>
-                      <NavLink href={link.href} current={link.current} class="w-full">
+                      <NavLink
+                        href={link.href}
+                        current={link.current}
+                        class="w-full px-3 hover:bg-surface"
+                      >
                         {link.label}
                       </NavLink>
                     </li>
                   ))}
                 </ul>
               </nav>
+
+              {cta && (
+                <div class="mt-2 border-t border-border pt-2">
+                  <a
+                    href={cta.href}
+                    class="otk-btn otk-btn--primary otk-btn--sm w-full"
+                  >
+                    {cta.label}
+                    <ArrowRight class="size-4" aria-hidden="true" />
+                  </a>
+                </div>
+              )}
             </div>
           </details>
         )
       }
     </div>
   </div>
+
+  <span
+    class="absolute bottom-0 left-0 h-px w-24 bg-gradient-to-r from-accent to-gold"
+    aria-hidden="true"></span>
 </header>
+
+<script is:inline>
+  (() => {
+    const menu = document.querySelector("details[data-site-menu]");
+    if (!(menu instanceof HTMLDetailsElement)) return;
+
+    const close = (restoreFocus = false) => {
+      if (!menu.open) return;
+      menu.open = false;
+      if (restoreFocus) menu.querySelector("summary")?.focus();
+    };
+
+    document.addEventListener("click", (event) => {
+      if (!menu.open) return;
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+
+      if (menu.contains(target)) {
+        if (target instanceof Element && target.closest("a")) close();
+        return;
+      }
+
+      close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close(true);
+    });
+
+    // If the viewport grows into the desktop header while the panel is open,
+    // close it so it cannot reappear when the viewport shrinks again.
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) close();
+    });
+  })();
+</script>

@@ -1,0 +1,99 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import Crest from "../brand/Crest.astro";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import { site } from "../../data/site";
+
+const registrationUrl = site.community.registrationUrl?.trim() || null;
+const isExternal = registrationUrl?.startsWith("http") ?? false;
+const primaryLabel = registrationUrl ? "Join the Nation" : "Explore the ecosystem";
+const primaryHref = registrationUrl ?? "#ecosystem";
+const secondaryLabel = registrationUrl ? "Explore the ecosystem" : "Update status";
+const secondaryHref = registrationUrl ? "#ecosystem" : "#news";
+const status = registrationUrl
+  ? "Community registration is open. Use the official Join the Nation link."
+  : site.community.status;
+---
+
+<section
+  id="community"
+  class="relative overflow-hidden bg-accent text-white"
+  aria-labelledby="community-title"
+>
+  <div class="absolute inset-0 otk-grid-lines text-white/10" aria-hidden="true"></div>
+  <span
+    class="otk-vertical-label absolute top-1/2 right-5 -translate-y-1/2 text-[0.65rem] font-semibold text-white/30"
+    lang="ja"
+    aria-hidden="true">オタクの国</span
+  >
+  <span
+    class="absolute top-12 -left-20 h-48 w-1 rotate-[26deg] bg-white/20"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="absolute -right-14 bottom-10 h-32 w-1 -rotate-[22deg] bg-white/25"
+    aria-hidden="true"
+  ></span>
+
+  <Container
+    class="relative grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:items-center lg:py-24"
+  >
+    <div class="lg:col-span-8">
+      <p class="otk-eyebrow text-white">The nation is coming</p>
+
+      <h2
+        id="community-title"
+        class="mt-4 text-balance text-display font-extrabold text-white uppercase"
+      >
+        Join the Nation.
+      </h2>
+
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-white sm:text-lg">
+        One nation for every Otaku. A place to belong, create, discover and grow with a
+        community that shares your language.
+      </p>
+
+      <p
+        class="mt-6 flex max-w-2xl items-start gap-3 border border-white/30 bg-black/15 px-4 py-3 text-xs leading-relaxed text-white"
+      >
+        <span class="mt-1.5 size-2 shrink-0 rounded-full bg-white" aria-hidden="true"
+        ></span>
+        {status}
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Button
+          href={primaryHref}
+          variant="inverse"
+          size="lg"
+          class="w-full sm:w-auto"
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+        >
+          {primaryLabel}
+          <ArrowRight class="size-4" aria-hidden="true" />
+        </Button>
+        <Button
+          href={secondaryHref}
+          variant="onaccent"
+          size="lg"
+          class="w-full sm:w-auto"
+        >
+          {secondaryLabel}
+        </Button>
+      </div>
+    </div>
+
+    <div class="lg:col-span-4 lg:justify-self-end">
+      <div class="border border-white/25 bg-ink-950/85 p-6 sm:p-8">
+        <Crest tone="dark" class="mx-auto h-40 sm:h-48" loading="lazy" />
+        <p
+          class="mt-5 text-center text-[0.6rem] font-semibold tracking-[0.2em] text-white uppercase"
+        >
+          The World&rsquo;s First Anime Nation
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>

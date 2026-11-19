@@ -1,34 +1,34 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Badge from "../components/ui/Badge.astro";
-import Container from "../components/ui/Container.astro";
-import Crest from "../components/brand/Crest.astro";
 import SiteHeader from "../components/nav/SiteHeader.astro";
+import SiteFooter from "../components/nav/SiteFooter.astro";
+import Hero from "../components/home/Hero.astro";
+import Vision from "../components/home/Vision.astro";
+import Ecosystem from "../components/home/Ecosystem.astro";
+import About from "../components/home/About.astro";
+import News from "../components/home/News.astro";
+import Opportunities from "../components/home/Opportunities.astro";
+import CommunityCta from "../components/home/CommunityCta.astro";
+import { site } from "../data/site";
 ---
 
-<BaseLayout description="Otakunation — the world's first anime nation. Corporate website in development.">
-  <SiteHeader />
+<BaseLayout
+  fullTitle="Otakunation — The World's First Anime Nation"
+  description={site.description}
+  image={site.seo.ogImage}
+  imageAlt={site.seo.ogImageAlt}
+>
+  <SiteHeader links={site.nav} brandHref="#top" cta={site.headerCta} />
 
   <main id="main" tabindex="-1" class="focus:outline-none">
-    <Container>
-      <section class="otk-section flex flex-col items-start gap-6">
-        <Badge>Foundation build</Badge>
-
-        <Crest class="h-24 sm:h-28" />
-
-        <h1 class="text-display font-extrabold uppercase text-text">
-          Otakunation
-        </h1>
-
-        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold sm:text-sm">
-          The World&rsquo;s First Anime Nation
-        </p>
-
-        <p class="otk-lede">
-          Corporate website in development. The brand identity and design system are in
-          place; page structure and content are pending approval.
-        </p>
-      </section>
-    </Container>
+    <Hero />
+    <Vision />
+    <Ecosystem />
+    <About />
+    <News />
+    <Opportunities />
+    <CommunityCta />
   </main>
+
+  <SiteFooter />
 </BaseLayout>

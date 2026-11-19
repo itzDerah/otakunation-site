@@ -1,7 +1,9 @@
 # otakunation-site
 
-Corporate website for Otakunation. This repository currently contains the brand and
-design foundation (Milestone 1) — no page sections or marketing content yet.
+Corporate website for Otakunation. This repository contains the brand and design
+foundation (Milestone 1) and the corporate homepage (Milestone 2). The homepage is a
+pre-launch presentation of the vision and the six planned ecosystem areas; no feature,
+registration flow, article or recruitment process is live.
 
 ## Stack
 
@@ -26,6 +28,18 @@ npm run build     # static output in dist/
 npm run preview   # serve the production build locally
 ```
 
+## Homepage
+
+`src/pages/index.astro` composes the masthead, hero, vision, ecosystem, about, news,
+opportunities, community CTA and footer. Anchors: `#top`, `#vision`, `#ecosystem`,
+`#about`, `#news`, `#opportunities`, `#community`, `#contact`.
+
+- All six ecosystem areas are marked **Planned**; the news and opportunities sections are
+  honest empty states rather than invented content.
+- Contact, registration, social and legal destinations are configured in
+  `src/data/site.ts` and intentionally unset until official values exist.
+- Layout and content decisions are documented in [`docs/homepage.md`](docs/homepage.md).
+
 ## Design system
 
 Tokens, themes and component APIs are documented in
@@ -34,17 +48,25 @@ Tokens, themes and component APIs are documented in
 
 - Dark is the default theme; light is fully supported. The choice persists in
   `localStorage` and is applied before first paint.
-- Components live in `src/components/ui`, `src/components/nav` and `src/components/brand`.
+- Components live in `src/components/ui`, `src/components/nav`, `src/components/brand` and
+  `src/components/home`.
 - Semantic utilities (`bg-surface`, `text-text-muted`, `border-border`, …) map to CSS
   variables and must be used instead of raw palette values inside components.
+- The homepage has been verified at 320, 360, 390, 768, 1024 and 1440px in both themes,
+  with zero axe-core WCAG 2.1/2.2 A/AA violations.
 
 ## Status
 
+- **Homepage implemented on `feature/homepage`.** Pending review; `main` still contains
+  only the Milestone 1 foundation.
 - **Brand artwork in place.** The official crest was cropped from the supplied dark and
-  light lockups and now renders in the masthead, foundation page and favicons. The compact
-  header arrangement (crest beside the typed wordmark) awaits brand approval; the supplied
-  stacked lockup has not been altered.
+  light lockups and renders in the masthead, homepage and favicons. The compact masthead
+  arrangement awaits brand approval; the supplied stacked lockup has not been altered.
 - **Palette pending confirmation.** Hex values were sampled from the supplied references.
 - **Vector masters pending.** The supplied artwork is raster (JPEG), so an SVG version is
   still needed for large-format use.
-- **Deployment not configured.** Cloudflare Pages is the intended host; wiring is deferred.
+- **Pre-launch content.** No production domain, contact address, social account,
+  registration URL, legal page, news item or recruitment process is configured.
+- **Deployment not configured.** Hosting is deferred.
+- **Production exclusion.** `/styleguide` is `noindex`, disallowed in `robots.txt` and
+  unlinked; remove or gate it before launch.

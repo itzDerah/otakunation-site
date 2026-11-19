@@ -3,18 +3,35 @@ import "@fontsource-variable/montserrat";
 import "../styles/global.css";
 
 interface Props {
+  /** Page-specific title. The brand suffix is appended automatically. */
   title?: string;
+  /** Complete title override, used when the title already contains the brand. */
+  fullTitle?: string;
   description?: string;
   noindex?: boolean;
+  image?: string;
+  imageAlt?: string;
 }
 
 const {
-  title = "Otakunation",
-  description = "Otakunation — the world's first anime nation.",
+  title,
+  fullTitle,
+  description = "Otakunation is a digital nation for Otakus: a connected, anime-inspired ecosystem for community, creativity, culture and play. The World's First Anime Nation.",
   noindex = false,
+  image = "/og/og-default.jpg",
+  imageAlt = "Otakunation crest on an ink background with the words Otakunation — The World's First Anime Nation.",
 } = Astro.props;
 
-const pageTitle = title === "Otakunation" ? title : `${title} — Otakunation`;
+const pageTitle =
+  fullTitle ??
+  (title ? `${title} — Otakunation` : "Otakunation — The World's First Anime Nation");
+
+// `site` is intentionally unset until a production domain is confirmed. When it is
+// configured in astro.config.mjs, canonical and absolute social URLs are emitted.
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+const socialImage = Astro.site ? new URL(image, Astro.site).href : image;
 ---
 
 <!doctype html>
@@ -25,10 +42,32 @@ const pageTitle = title === "Otakunation" ? title : `${title} — Otakunation`;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#07060a" />
+    <meta name="theme-color" content="#07060A" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Otakunation" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="en_US" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <!-- Set the theme before first paint to avoid a flash of the wrong palette. -->
     <script is:inline>
@@ -43,7 +82,7 @@ const pageTitle = title === "Otakunation" ? title : `${title} — Otakunation`;
           .querySelector('meta[name="theme-color"]')
           ?.setAttribute(
             "content",
-            document.documentElement.dataset.theme === "light" ? "#f7f4ef" : "#07060a",
+            document.documentElement.dataset.theme === "light" ? "#F7F4EF" : "#07060A",
           );
       })();
     </script>
@@ -82,7 +121,7 @@ const pageTitle = title === "Otakunation" ? title : `${title} — Otakunation`;
           document.documentElement.dataset.theme = next;
           document
             .querySelector('meta[name="theme-color"]')
-            ?.setAttribute("content", next === "light" ? "#f7f4ef" : "#07060a");
+            ?.setAttribute("content", next === "light" ? "#F7F4EF" : "#07060A");
           try {
             localStorage.setItem("otk-theme", next);
           } catch {}

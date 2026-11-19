@@ -1,0 +1,140 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import Crest from "../brand/Crest.astro";
+import Button from "../ui/Button.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Container from "../ui/Container.astro";
+---
+
+<section id="about" class="otk-section border-b border-border" aria-labelledby="about-title">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-6">
+        <SectionHeading
+          eyebrow="About Otakunation"
+          title="Our story is still being written."
+          as="h2"
+          id="about-title"
+          size="lg"
+        />
+
+        <div class="mt-8 max-w-prose space-y-5 text-sm leading-relaxed text-text-muted sm:text-base">
+          <p>
+            <strong class="font-semibold text-text">
+              Otakunation is a digital nation for Otakus:
+            </strong>{" "}
+            a culture-first home for anime and manga, community, creativity and play.
+          </p>
+          <p>
+            It exists because fandom deserves more than scattered feeds. We are building
+            one connected place where enthusiasts can belong, creators can be seen, and
+            the culture can grow across borders.
+          </p>
+          <p>
+            African-founded and internationally minded, Otakunation is designed for
+            Otakus everywhere — rooted in a real community, open to the world.
+          </p>
+        </div>
+
+        <Button href="#opportunities" variant="secondary" class="mt-8">
+          Where we&rsquo;re going
+          <ArrowRight class="size-4" aria-hidden="true" />
+        </Button>
+      </div>
+
+      <div class="lg:col-span-5 lg:col-start-8">
+        <div class="otk-corners relative overflow-hidden border border-border bg-surface p-6 sm:p-8">
+          <div class="absolute inset-0 otk-grid-lines text-border" aria-hidden="true"></div>
+
+          <p class="otk-eyebrow relative">The nation seal</p>
+          <Crest class="relative mx-auto mt-8 h-40 sm:h-48" loading="lazy" />
+          <p
+            class="relative mt-8 text-center text-[0.65rem] font-semibold tracking-[0.24em] text-gold uppercase"
+          >
+            A digital nation for Otakus
+          </p>
+
+          <dl class="relative mt-8 divide-y divide-border border-y border-border">
+            <div class="flex items-center justify-between gap-4 py-3">
+              <dt class="text-xs font-semibold tracking-[0.12em] text-text uppercase">
+                Rooted in Africa
+              </dt>
+              <dd class="text-xs text-text-subtle">Our foundation</dd>
+            </div>
+            <div class="flex items-center justify-between gap-4 py-3">
+              <dt class="text-xs font-semibold tracking-[0.12em] text-text uppercase">
+                Open to the world
+              </dt>
+              <dd class="text-xs text-text-subtle">Our ambition</dd>
+            </div>
+            <div class="flex items-center justify-between gap-4 py-3">
+              <dt class="text-xs font-semibold tracking-[0.12em] text-text uppercase">
+                Built for Otakus
+              </dt>
+              <dd class="text-xs text-text-subtle">Our centre</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <div class="mt-16 border-y border-gold-700/40 bg-gold-500 text-ink-950 sm:mt-24">
+    <Container
+      class="relative grid gap-6 py-10 md:grid-cols-[8rem_1fr_auto] md:items-center md:gap-8 md:py-12"
+    >
+      <div
+        class="pointer-events-none absolute top-1/2 right-3 w-40 -translate-y-1/2 opacity-20 md:relative md:top-auto md:right-auto md:w-32 md:translate-y-0 md:opacity-100"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 180 220" fill="none" class="h-auto w-full">
+          <path
+            d="M46 20 Q64 16 82 18 L126 34 Q129 35 130 37 L137 53 Q139 56 141 58 L154 85 Q162 88 172 88 L159 112 Q153 120 148 128 L145 137 L137 172 L132 188 Q130 194 128 199 L104 212 Q101 211 99 209 L86 166 L86 142 L86 134 Q82 126 79 118 L77 107 Q69 105 60 104 Q51 104 42 104 Q36 100 31 96 L22 77 L22 61 L24 47 Q30 40 38 34 Z"
+            fill="#07060A"
+            fill-opacity=".08"
+            stroke="#07060A"
+            stroke-width="2"></path>
+          <path
+            d="M158 154 Q165 152 164 162 L160 182 Q156 186 154 176 Z"
+            fill="#07060A"
+            fill-opacity=".08"
+            stroke="#07060A"
+            stroke-width="1.5"></path>
+          <ellipse
+            cx="92"
+            cy="112"
+            rx="84"
+            ry="98"
+            stroke="#07060A"
+            stroke-opacity=".18"
+            stroke-dasharray="3 7"></ellipse>
+          <circle cx="60" cy="103" r="4" fill="#D91F2E"></circle>
+          <path d="M60 107V121" stroke="#D91F2E" stroke-width="1"></path>
+          <path
+            d="M20 24H32M26 18V30M160 148H172M166 142V154"
+            stroke="#07060A"
+            stroke-opacity=".45"></path>
+        </svg>
+      </div>
+
+      <div class="relative z-10">
+        <p class="text-2xs font-bold uppercase text-ink-950">Rooted in Africa</p>
+        <h3 class="mt-2 max-w-2xl text-2xl font-bold leading-tight sm:text-3xl">
+          An African dream. A global impact.
+        </h3>
+        <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-950">
+          Proudly African. Ambitiously global. Otakunation is built from a real cultural
+          foundation and designed to travel.
+        </p>
+      </div>
+
+      <a
+        href="#opportunities"
+        class="otk-text-link otk-text-link--ink relative z-10 shrink-0"
+      >
+        Explore opportunities
+        <ArrowRight class="size-4" aria-hidden="true" />
+      </a>
+    </Container>
+  </div>
+</section>

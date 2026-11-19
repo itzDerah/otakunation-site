@@ -1,0 +1,71 @@
+---
+import { Layers } from "@lucide/astro";
+import EcosystemCard from "./EcosystemCard.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Container from "../ui/Container.astro";
+import {
+  ecosystemAreas,
+  type EcosystemArea,
+} from "../../data/ecosystem";
+
+const spans: Record<EcosystemArea["key"], string> = {
+  anime: "md:col-span-2 lg:col-span-7",
+  community: "lg:col-span-5",
+  guilds: "lg:col-span-4",
+  creators: "lg:col-span-4",
+  gaming: "lg:col-span-4",
+  marketplace: "md:col-span-2 lg:col-span-12",
+};
+---
+
+<section
+  id="ecosystem"
+  class="otk-section border-b border-border bg-bg-subtle"
+  aria-labelledby="ecosystem-title"
+>
+  <Container>
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <SectionHeading
+        eyebrow="The ecosystem"
+        title="One nation. Six worlds."
+        lede="A connected vision for anime culture — designed to unfold area by area, with the community at the centre."
+        as="h2"
+        id="ecosystem-title"
+        size="lg"
+        class="max-w-2xl"
+      />
+
+      <div
+        class="otk-corners flex max-w-sm items-start gap-4 border border-border bg-bg p-4"
+      >
+        <span
+          class="grid size-10 shrink-0 place-items-center border border-gold/30 bg-gold/5 text-gold"
+        >
+          <Layers class="size-4" aria-hidden="true" />
+        </span>
+        <p class="text-xs leading-relaxed text-text-muted">
+          <span class="font-semibold text-text">All six areas are planned.</span>
+          {" "}None of the ecosystem features are live yet.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
+      {
+        ecosystemAreas.map((area) => (
+          <EcosystemCard area={area} class={spans[area.key]} />
+        ))
+      }
+    </div>
+
+    <p class="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-text-subtle">
+      Every area above is in planning. There is no public launch date yet;
+      <a
+        href="#news"
+        class="inline-flex min-h-6 items-center font-semibold text-text underline decoration-gold/60 underline-offset-4 hover:text-gold"
+      >
+        verified updates will be published in News &amp; Updates
+      </a>.
+    </p>
+  </Container>
+</section>

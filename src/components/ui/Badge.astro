@@ -1,14 +1,22 @@
 ---
 interface Props {
+  tone?: "gold" | "neutral" | "accent";
   class?: string;
 }
 
-const { class: className } = Astro.props;
+const { tone = "gold", class: className } = Astro.props;
+
+const tones = {
+  gold: "border-gold/40 bg-gold/10 text-gold",
+  neutral: "border-border bg-surface text-text-muted",
+  accent: "border-accent/40 bg-accent/10 text-accent",
+} as const;
 ---
 
 <span
   class:list={[
-    "inline-flex w-fit items-center gap-1.5 rounded-sm border border-gold/40 bg-gold/10 px-2.5 py-1 text-2xs font-semibold uppercase text-gold",
+    "inline-flex w-fit items-center gap-1.5 rounded-sm border px-2.5 py-1 text-2xs font-semibold uppercase",
+    tones[tone],
     className,
   ]}
 >

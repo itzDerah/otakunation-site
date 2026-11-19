@@ -1,0 +1,120 @@
+---
+import { ArrowRight, Handshake, PenLine, Sparkles, Store } from "@lucide/astro";
+import Badge from "../ui/Badge.astro";
+import Button from "../ui/Button.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Container from "../ui/Container.astro";
+
+const lanes = [
+  {
+    icon: Sparkles,
+    title: "Creators",
+    body: "For video creators, streamers, cosplayers and community voices who want to build with us.",
+  },
+  {
+    icon: PenLine,
+    title: "Artists & Writers",
+    body: "For illustrators, authors and essayists whose work deserves a thoughtful, culture-first audience.",
+  },
+  {
+    icon: Store,
+    title: "Merchants",
+    body: "For independent shops and fan-made makers interested in a future marketplace built on trust.",
+  },
+  {
+    icon: Handshake,
+    title: "Partners & Collaborators",
+    body: "For studios, events, communities and organisations who share our belief in anime culture and its future.",
+  },
+];
+---
+
+<section
+  id="opportunities"
+  class="otk-section border-b border-border"
+  aria-labelledby="opportunities-title"
+>
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-28">
+          <SectionHeading
+            eyebrow="Opportunities"
+            title="Build the nation with us."
+            as="h2"
+            id="opportunities-title"
+            size="lg"
+          />
+
+          <p class="mt-6 max-w-prose text-base leading-relaxed text-text-muted">
+            Otakunation is being designed with its community, not just for it. These are
+            the lanes we plan to open as the nation takes shape.
+          </p>
+
+          <div class="mt-8 border-l-2 border-gold pl-4">
+            <p class="text-sm leading-relaxed text-text-muted">
+              <span class="font-semibold text-text">No recruitment is open yet.</span>
+              {" "}There is no application form, deadline or selection process to share at
+              this stage.
+            </p>
+          </div>
+
+          <div class="mt-12 hidden items-end gap-4 lg:flex" aria-hidden="true">
+            <span class="font-display text-7xl leading-none font-extrabold text-text/45">
+              04
+            </span>
+            <span
+              class="border-l border-gold/40 pb-1 pl-4 text-2xs font-semibold uppercase text-text-subtle"
+            >
+              Four lanes<br />One nation
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 lg:col-start-7">
+        <ol class="border-t border-border">
+          {
+            lanes.map(({ icon: Icon, title, body }, index) => (
+              <li class="border-b border-border py-7 first:pt-6">
+                <div class="grid gap-4 sm:grid-cols-[2.5rem_1fr_auto] sm:items-start">
+                  <span class="font-display text-xs font-bold tracking-[0.18em] text-gold">
+                    0{index + 1}
+                  </span>
+
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-3">
+                      <span class="grid size-8 shrink-0 place-items-center border border-gold/25 bg-gold/5 text-gold">
+                        <Icon class="size-4" aria-hidden="true" />
+                      </span>
+                      <h3 class="text-lg font-bold text-text">{title}</h3>
+                    </div>
+                    <p class="mt-2 max-w-prose text-sm leading-relaxed text-text-muted">
+                      {body}
+                    </p>
+                  </div>
+
+                  <Badge tone="neutral" class="sm:mt-0.5 sm:justify-self-end">
+                    Not yet open
+                  </Badge>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="otk-corners mt-8 border border-border bg-surface p-5 sm:p-6">
+          <h3 class="text-sm font-bold text-text">Applications are not open yet.</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">
+            Contact channels are being finalised. When verified details are available,
+            they will be published in the Contact section.
+          </p>
+          <Button href="#contact" variant="secondary" size="sm" class="mt-4">
+            View contact status
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

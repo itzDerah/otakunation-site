@@ -5,33 +5,53 @@
  * These are the supplied crest artwork, cropped from the official dark and light
  * lockups and exported with transparency. Never redraw, recolour or distort the
  * mark — replace the files in `public/brand/` if the brand team issues new ones.
+ *
+ * `tone="auto"` follows the page theme. Use `tone="dark"` inside a permanently
+ * dark brand panel (for example the hero stage) so the crest stays legible.
  */
 interface Props {
   alt?: string;
   class?: string;
   loading?: "eager" | "lazy";
+  tone?: "auto" | "dark" | "light";
 }
 
-const { alt = "", class: className, loading = "eager" } = Astro.props;
+const {
+  alt = "",
+  class: className,
+  loading = "eager",
+  tone = "auto",
+} = Astro.props;
+
+const showDark = tone === "auto" || tone === "dark";
+const showLight = tone === "auto" || tone === "light";
 ---
 
-<img
-  src="/brand/crest-dark.png"
-  alt={alt}
-  width="176"
-  height="240"
-  loading={loading}
-  decoding="async"
-  fetchpriority={loading === "eager" ? "high" : undefined}
-  class:list={["hidden w-auto dark:block", className]}
-/>
-<img
-  src="/brand/crest-light.png"
-  alt={alt}
-  width="180"
-  height="240"
-  loading={loading}
-  decoding="async"
-  fetchpriority={loading === "eager" ? "high" : undefined}
-  class:list={["w-auto dark:hidden", className]}
-/>
+{
+  showDark && (
+    <img
+      src="/brand/crest-dark.png"
+      alt={alt}
+      width="176"
+      height="240"
+      loading={loading}
+      decoding="async"
+      fetchpriority={loading === "eager" ? "high" : undefined}
+      class:list={[tone === "auto" ? "hidden dark:block" : "block", "w-auto", className]}
+    />
+  )
+}
+{
+  showLight && (
+    <img
+      src="/brand/crest-light.png"
+      alt={alt}
+      width="180"
+      height="240"
+      loading={loading}
+      decoding="async"
+      fetchpriority={loading === "eager" ? "high" : undefined}
+      class:list={[tone === "auto" ? "dark:hidden" : "block", "w-auto", className]}
+    />
+  )
+}
