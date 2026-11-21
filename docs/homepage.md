@@ -81,18 +81,25 @@ opens the configured destination.
 - favicon, 192px icon and Apple touch icon;
 - `theme-color` updated with the active theme.
 
-`Astro.site` is intentionally unset because no production domain is confirmed. Therefore:
+`astro.config.mjs` sets `site` and `base` only when `DEPLOY_TARGET=github-pages`, which
+the Pages workflow provides. Local development therefore keeps root-relative URLs, while
+the deployed build emits:
 
-- no canonical URL is emitted;
-- no `og:url` is emitted;
-- the Open Graph/Twitter image is a root-relative path.
+- canonical URL `https://itzderah.github.io/otakunation-site/…`;
+- `og:url` and absolute Open Graph/Twitter image URLs;
+- base-prefixed favicons, crest images, fonts, CSS and in-site links.
 
-Once the domain is agreed, set `site` in `astro.config.mjs`. `BaseLayout` will then emit a
-canonical URL and absolute social image URLs. Add `@astrojs/sitemap` and a `Sitemap:` line
-in `public/robots.txt` at the same time.
+`src/utils/paths.ts` centralises the prefixing: `asset()` for `public/` files and
+`withBase()` for routes. New components must use these helpers rather than hard-coding
+`/…`, otherwise links break under the project Pages path.
 
-`public/robots.txt` allows the site and disallows `/styleguide`. The styleguide also
-carries `noindex, nofollow` and is not linked from the homepage.
+The production domain is not yet confirmed. GitHub Pages is the current **preview**
+hosting target; when the real domain is agreed, update `astro.config.mjs` and add
+`@astrojs/sitemap` plus a `Sitemap:` line in the generated `robots.txt`.
+
+`src/pages/robots.txt.ts` allows the site and disallows the styleguide route using the
+configured base path (`/styleguide` locally, `/otakunation-site/styleguide` on Pages).
+The styleguide also carries `noindex, nofollow` and is not linked from the homepage.
 
 ## Verified checks
 
@@ -126,15 +133,28 @@ npm run dev                 # http://localhost:4321
 npm run build && npm run preview
 ```
 
+The deployed preview is <https://itzderah.github.io/otakunation-site/>, built by
+`.github/workflows/deploy-pages.yml`. To reproduce its `/otakunation-site/` base path
+locally, build with the same environment as the workflow:
+
+```bash
+DEPLOY_TARGET=github-pages \
+GITHUB_REPOSITORY=itzDerah/otakunation-site \
+GITHUB_REPOSITORY_OWNER=itzDerah \
+npm run build
+```
+
 ## Production checklist
 
-1. Set the confirmed production domain in `astro.config.mjs` (`site`), then verify the
-   canonical URL and absolute OG image URL in the built HTML.
+1. Replace the GitHub Pages preview with the confirmed production domain, then verify the
+   canonical URL and absolute OG image URL in the built HTML. Keep the Pages workflow for
+   previews or move it to a separate public repository if the source stays private.
 2. Remove or gate `src/pages/styleguide.astro`; keep the robots disallow only as a
    temporary defence.
 3. Add a sitemap integration and the corresponding `Sitemap:` robots entry.
 4. Replace pending config values only with verified official destinations.
 5. Re-run the link, theme, responsive, reduced-motion and axe checks against the deployed
-   URL, including a real social-card preview.
+   URL, including a real social-card preview. The Pages build must keep every asset under
+   `/otakunation-site/` until the production domain replaces the project path.
 6. Obtain brand approval for the compact masthead lockup, sampled palette and raster
    crest, or replace them with approved vector masters.

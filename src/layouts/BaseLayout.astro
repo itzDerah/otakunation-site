@@ -1,6 +1,7 @@
 ---
 import "@fontsource-variable/montserrat";
 import "../styles/global.css";
+import { asset, withBase } from "../utils/paths";
 
 interface Props {
   /** Page-specific title. The brand suffix is appended automatically. */
@@ -26,12 +27,15 @@ const pageTitle =
   fullTitle ??
   (title ? `${title} — Otakunation` : "Otakunation — The World's First Anime Nation");
 
-// `site` is intentionally unset until a production domain is confirmed. When it is
-// configured in astro.config.mjs, canonical and absolute social URLs are emitted.
+// `site` is set only for the GitHub Pages build (see astro.config.mjs). When it is
+// configured, canonical and absolute social URLs are emitted.
 const canonicalUrl = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site).href
+  ? new URL(withBase(Astro.url.pathname), Astro.site).href
   : undefined;
-const socialImage = Astro.site ? new URL(image, Astro.site).href : image;
+const socialImagePath = /^https?:\/\//i.test(image) ? image : asset(image);
+const socialImage = Astro.site
+  ? new URL(socialImagePath, Astro.site).href
+  : socialImagePath;
 ---
 
 <!doctype html>
@@ -43,9 +47,9 @@ const socialImage = Astro.site ? new URL(image, Astro.site).href : image;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={asset("/favicon.ico")} sizes="48x48" />
+    <link rel="icon" type="image/png" href={asset("/icon-192.png")} sizes="192x192" />
+    <link rel="apple-touch-icon" href={asset("/apple-touch-icon.png")} />
     <meta name="theme-color" content="#07060A" />
     <meta name="color-scheme" content="dark light" />
 

@@ -3,6 +3,7 @@ import { ArrowRight, Menu, X } from "@lucide/astro";
 import BrandLockup from "../brand/BrandLockup.astro";
 import NavLink from "./NavLink.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import { withBase } from "../../utils/paths";
 
 interface NavItem {
   href: string;
@@ -19,7 +20,7 @@ interface Props {
   };
 }
 
-const { links = [], brandHref = "/", cta } = Astro.props;
+const { links = [], brandHref = withBase("/"), cta } = Astro.props;
 ---
 
 <header

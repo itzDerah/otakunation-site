@@ -186,10 +186,16 @@ import SectionHeading from "../components/ui/SectionHeading.astro";
 - Decorative elements are clipped by their sections so they cannot create horizontal
   overflow.
 
-## Production exclusions
+## Deployment and production exclusions
+
+The public preview is deployed to <https://itzderah.github.io/otakunation-site/> by
+`.github/workflows/deploy-pages.yml`. The workflow builds with `DEPLOY_TARGET=github-pages`,
+so `astro.config.mjs` applies the `/otakunation-site/` base path. Components must use
+`asset()` / `withBase()` from `src/utils/paths.ts` for public files and internal routes.
 
 `/styleguide` is an internal review page. It carries `noindex, nofollow`, is disallowed in
-`public/robots.txt`, and is not linked from the homepage. Remove or gate the route before a
+the generated `robots.txt` (with the deployment base path applied), and is not linked from
+the homepage. Remove or gate the route before a
 production launch; the current robots rule is defence in depth, not a substitute for
 removing the page.
 
@@ -201,7 +207,8 @@ removing the page.
    references and should be confirmed against the original brand file.
 3. **SVG brand masters** — the supplied artwork is raster; vector originals are preferred
    for large-format and print use.
-4. **Production domain** — setting `site` in `astro.config.mjs` will enable canonical URLs,
-   absolute Open Graph image URLs and sitemap generation. Until then none are emitted.
+4. **Production domain** — the GitHub Pages preview sets `site` and `base` only when
+   `DEPLOY_TARGET=github-pages`. A confirmed production domain should replace the Pages
+   URL in `astro.config.mjs`; sitemap generation is still pending.
 5. **Live content** — contact email, social channels, registration URL, legal pages, news
    and opportunity applications are intentionally unset or marked pending.

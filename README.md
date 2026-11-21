@@ -28,6 +28,30 @@ npm run build     # static output in dist/
 npm run preview   # serve the production build locally
 ```
 
+## Deployment
+
+GitHub Pages is built and deployed by
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) on every push to
+`main` or `feature/homepage`, and can also be started manually with `workflow_dispatch`.
+
+- **Live preview:** <https://itzderah.github.io/otakunation-site/>
+- **Project base path:** GitHub serves project sites from `/otakunation-site/`. The
+  workflow sets `DEPLOY_TARGET=github-pages`, which makes `astro.config.mjs` set the
+  matching `site` and `base` values.
+- **Local development:** without `DEPLOY_TARGET`, no `site` or `base` is configured, so
+  `npm run dev` and `npm run preview` continue to serve the root URL.
+- **Base-aware URLs:** `src/utils/paths.ts` provides `asset()` for files in `public/` and
+  `withBase()` for routes. Use them in any new component instead of hard-coding `/…`.
+
+Reproduce the deployed build locally:
+
+```bash
+DEPLOY_TARGET=github-pages \
+GITHUB_REPOSITORY=itzDerah/otakunation-site \
+GITHUB_REPOSITORY_OWNER=itzDerah \
+npm run build
+```
+
 ## Homepage
 
 `src/pages/index.astro` composes the masthead, hero, vision, ecosystem, about, news,
@@ -67,6 +91,8 @@ Tokens, themes and component APIs are documented in
   still needed for large-format use.
 - **Pre-launch content.** No production domain, contact address, social account,
   registration URL, legal page, news item or recruitment process is configured.
-- **Deployment not configured.** Hosting is deferred.
+- **Deployed to GitHub Pages.** The public preview runs at
+  `https://itzderah.github.io/otakunation-site/`. The repository is public so Pages can
+  build it; `main` still contains only the Milestone 1 foundation.
 - **Production exclusion.** `/styleguide` is `noindex`, disallowed in `robots.txt` and
   unlinked; remove or gate it before launch.

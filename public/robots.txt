@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-# Internal design reference: keep out of search results while it exists.
-Disallow: /styleguide
-
-# Sitemap: add once the production domain is confirmed and @astrojs/sitemap is configured.

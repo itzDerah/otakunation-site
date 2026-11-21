@@ -9,6 +9,8 @@
  * `tone="auto"` follows the page theme. Use `tone="dark"` inside a permanently
  * dark brand panel (for example the hero stage) so the crest stays legible.
  */
+import { asset } from "../../utils/paths";
+
 interface Props {
   alt?: string;
   class?: string;
@@ -30,7 +32,7 @@ const showLight = tone === "auto" || tone === "light";
 {
   showDark && (
     <img
-      src="/brand/crest-dark.png"
+      src={asset("/brand/crest-dark.png")}
       alt={alt}
       width="176"
       height="240"
@@ -44,7 +46,7 @@ const showLight = tone === "auto" || tone === "light";
 {
   showLight && (
     <img
-      src="/brand/crest-light.png"
+      src={asset("/brand/crest-light.png")}
       alt={alt}
       width="180"
       height="240"
