@@ -1,8 +1,8 @@
 ---
 import { ArrowRight, Crown, Globe, Users } from "@lucide/astro";
-import Crest from "../brand/Crest.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
+import { asset } from "../../utils/paths";
 import { site } from "../../data/site";
 
 const pillars = [
@@ -22,182 +22,104 @@ const pillars = [
     detail: "A digital nation",
   },
 ];
+
+const heroArtwork = asset("/brand/artwork/hero-castle-original.jpg");
 ---
 
-<section class="relative overflow-hidden border-b border-border" aria-labelledby="hero-title">
-  <div
-    class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
-    aria-hidden="true"
-  >
-  </div>
+<section
+  class="relative border-b border-border bg-bg"
+  aria-labelledby="hero-title"
+>
+  <div class="relative isolate overflow-hidden">
+    <div
+      class="otk-hero-media relative h-60 overflow-hidden sm:h-[20rem] lg:absolute lg:inset-0 lg:h-full"
+      aria-hidden="true"
+    >
+      <img
+        src={heroArtwork}
+        alt=""
+        width="1568"
+        height="628"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="absolute inset-0 size-full object-cover object-[36%_center] lg:object-left"
+      />
 
-  <Container
-    class="relative grid gap-12 py-12 sm:py-16 lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-20 xl:py-24"
-  >
-    <div class="min-w-0 lg:col-span-7">
-      <p class="otk-eyebrow otk-eyebrow-line">A nation beyond imagination</p>
+      <!-- Desktop: cinematic scrim that follows the active theme. -->
+      <div class="otk-hero-scrim absolute inset-0 hidden lg:block"></div>
 
-      <h1
-        id="hero-title"
-        class="mt-6 text-hero font-extrabold uppercase whitespace-nowrap text-text"
-        aria-label="Otakunation"
-      >
-        <span aria-hidden="true">OTAKU</span><span class="text-accent" aria-hidden="true"
-          >NATION</span
-        >
-      </h1>
-
-      <p class="mt-4 max-w-xl text-balance text-display-sm font-bold text-text">
-        The World&rsquo;s First Anime Nation
-      </p>
-
-      <p class="otk-lede mt-6">
-        A digital nation where anime, creativity, technology and community meet — built
-        for Otakus everywhere.
-      </p>
-
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Button href="#ecosystem" size="lg" class="w-full sm:w-auto">
-          Explore the ecosystem
-          <ArrowRight class="size-4" aria-hidden="true" />
-        </Button>
-        <Button
-          href="#about"
-          variant="secondary"
-          size="lg"
-          class="w-full sm:w-auto"
-        >
-          Read our story
-        </Button>
-      </div>
-
-      <p class="mt-5 inline-flex items-center gap-2 text-xs text-text-subtle">
-        <span class="otk-status-dot" aria-hidden="true"></span>
-        {site.status} · Community registration pending
-      </p>
-
-      <ul
-        class="mt-8 grid grid-cols-1 gap-4 border-t border-border pt-6 min-[360px]:grid-cols-3 min-[360px]:gap-3"
-      >
-        {
-          pillars.map(({ icon: Icon, label, detail }) => (
-            <li class="flex items-center gap-3 min-[360px]:flex-col min-[360px]:gap-2 min-[360px]:text-center">
-              <span class="grid size-9 shrink-0 place-items-center border border-gold/30 bg-gold/5 text-gold">
-                <Icon class="size-4" aria-hidden="true" />
-              </span>
-              <span class="min-w-0">
-                <span class="block text-xs font-semibold text-text">{label}</span>
-                <span class="block text-[0.6875rem] leading-snug text-text-subtle">
-                  {detail}
-                </span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <div class="min-w-0 lg:col-span-5">
+      <!-- Mobile: blend the carefully cropped landscape into the page. -->
       <div
-        class="otk-corners relative flex min-h-[28rem] flex-col overflow-hidden border border-white/15 bg-ink-950 p-5 text-paper-100 [--otk-gold:#C09A54] sm:min-h-[34rem] sm:p-7 lg:min-h-[32rem]"
-        aria-hidden="true"
+        class="absolute inset-0 bg-gradient-to-b from-ink-950/30 via-transparent to-transparent lg:hidden"
       >
-        <div class="absolute inset-0 otk-grid-lines text-white/10"></div>
-        <span
-          class="absolute top-1/3 left-3 h-24 w-1 rotate-[18deg] bg-accent"
-        ></span>
-        <span
-          class="absolute right-3 bottom-1/4 h-16 w-1 -rotate-[22deg] bg-gold"
-        ></span>
-
-        <div class="relative z-10 flex items-start justify-between gap-4">
-          <span
-            class="border border-white/15 bg-ink-950/80 px-2.5 py-1.5 text-[0.55rem] font-semibold tracking-[0.2em] text-paper-300 uppercase"
-          >
-            Anime / Manga
-          </span>
-          <span
-            class="border border-white/15 bg-ink-950/80 px-2.5 py-1.5 text-[0.55rem] font-semibold tracking-[0.2em] text-paper-300 uppercase"
-          >
-            Guilds / Events
-          </span>
-        </div>
-
-        <span
-          class="otk-vertical-label absolute top-1/2 right-4 -translate-y-1/2 text-[0.65rem] font-semibold text-gold"
-          lang="ja">オタクの国</span
-        >
-
-        <div class="relative z-10 flex flex-1 items-center justify-center py-6">
-          <div class="relative aspect-square w-[21rem] max-w-[92%] sm:w-[25rem]">
-            <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full text-white/20">
-              <circle
-                cx="200"
-                cy="200"
-                r="168"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-                stroke-dasharray="1 9"></circle>
-              <circle
-                cx="200"
-                cy="200"
-                r="126"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"></circle>
-              <circle
-                cx="200"
-                cy="200"
-                r="84"
-                fill="none"
-                stroke="#C09A54"
-                stroke-opacity=".3"
-                stroke-width="1"></circle>
-              <path
-                d="M64 268 L138 194 L190 240 L248 150 L336 238"
-                fill="none"
-                stroke="#D91F2E"
-                stroke-opacity=".45"
-                stroke-width="1"></path>
-              <g class="otk-orbit-spin">
-                <circle cx="200" cy="32" r="4" fill="#D91F2E"></circle>
-                <circle cx="368" cy="200" r="2.5" fill="#C09A54"></circle>
-                <circle cx="200" cy="368" r="2" fill="#F7F4EF" fill-opacity=".6"></circle>
-                <circle cx="74" cy="106" r="2" fill="#C09A54" fill-opacity=".8"></circle>
-              </g>
-            </svg>
-
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div
-                class="relative flex flex-col items-center border border-gold/40 bg-ink-900/95 px-8 py-6"
-              >
-                <span
-                  class="absolute -top-px left-1/2 h-px w-16 -translate-x-1/2 bg-gold"
-                ></span>
-                <Crest tone="dark" class="h-36 sm:h-44 lg:h-48" loading="eager" />
-                <span
-                  class="mt-4 border-t border-white/15 pt-3 text-[0.55rem] font-semibold tracking-[0.28em] text-gold uppercase"
-                >
-                  The nation awaits
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative z-10 flex items-end justify-between gap-4 border-t border-white/15 pt-4">
-          <div>
-            <p class="text-[0.55rem] font-semibold tracking-[0.2em] text-paper-300 uppercase">
-              A digital nation
-            </p>
-            <p class="mt-1 text-xs font-semibold tracking-[0.14em] text-gold uppercase">
-              For Otakus everywhere
-            </p>
-          </div>
-          <span class="text-3xl leading-none font-extrabold text-white/15">国</span>
-        </div>
+      </div>
+      <div
+        class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-bg via-bg/40 to-transparent lg:hidden"
+      >
       </div>
     </div>
-  </Container>
+
+    <div
+      class="otk-corners otk-hero-frame pointer-events-none absolute z-10 hidden lg:block"
+      aria-hidden="true"
+    >
+    </div>
+
+    <Container class="relative pt-10 pb-10 sm:pt-14 sm:pb-12 lg:pt-24 lg:pb-16 xl:pt-28 xl:pb-20">
+      <div class="otk-hero-copy min-w-0 max-w-2xl">
+        <p class="otk-eyebrow otk-eyebrow-line">A nation beyond imagination</p>
+
+        <h1
+          id="hero-title"
+          class="mt-6 text-hero font-extrabold uppercase whitespace-nowrap text-text"
+          aria-label="Otakunation"
+        >
+          <span aria-hidden="true">OTAKU</span><span class="text-accent" aria-hidden="true"
+            >NATION</span
+          >
+        </h1>
+
+        <p class="mt-4 max-w-xl text-balance text-display-sm font-bold text-text">
+          The World&rsquo;s First Anime Nation
+        </p>
+
+        <p class="otk-lede mt-6">
+          A digital nation where anime, creativity, technology and community meet — built
+          for Otakus everywhere.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Button href="#ecosystem" size="lg" class="w-full sm:w-auto">
+            Explore the ecosystem
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </Button>
+          <Button
+            href="#about"
+            variant="secondary"
+            size="lg"
+            class="w-full sm:w-auto"
+          >
+            Read our story
+          </Button>
+        </div>
+
+        <p class="mt-5 inline-flex items-center gap-2 text-xs text-text-subtle">
+          <span class="otk-status-dot" aria-hidden="true"></span>
+          {site.status} · Community registration pending
+        </p>
+      </div>
+    </Container>
+
+    <div
+      class="otk-hero-plate pointer-events-none absolute right-8 bottom-8 z-10 hidden items-center gap-3 px-3 py-2 lg:flex"
+      aria-hidden="true"
+    >
+      <span class="h-px w-6 bg-gold"></span>
+      <span class="text-[0.6rem] font-semibold tracking-[0.22em] uppercase">
+        The nation awaits
+      </span>
+      <span class="text-[0.6rem] tracking-[0.3em] text-gold" lang="ja">オタクの国</span>
+    </div>
+  </div>
 </section>

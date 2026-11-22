@@ -7,6 +7,74 @@
  * ------------------------------------------------------------------ */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* Hero artwork ---------------------------------------------------- */
+/*
+ * The castle artwork is a permanently dark cinematic surface. The scrims
+ * keep the copy legible while the frame, plate and gold accents follow the
+ * active theme. On small screens the artwork is a wide banner in normal
+ * flow, so the copy below keeps the page's theme colours.
+ */
+.otk-hero-scrim {
+  background:
+    linear-gradient(
+      to right,
+      rgb(7 6 10 / 0.94) 0%,
+      rgb(7 6 10 / 0.84) 26%,
+      rgb(7 6 10 / 0.52) 45%,
+      rgb(7 6 10 / 0.16) 63%,
+      rgb(7 6 10 / 0) 82%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(7 6 10 / 0.3) 0%,
+      rgb(7 6 10 / 0) 22%,
+      rgb(7 6 10 / 0) 62%,
+      rgb(7 6 10 / 0.6) 100%
+    );
+}
+
+[data-theme="light"] .otk-hero-scrim {
+  background:
+    linear-gradient(
+      to right,
+      rgb(7 6 10 / 0.9) 0%,
+      rgb(7 6 10 / 0.78) 27%,
+      rgb(7 6 10 / 0.45) 46%,
+      rgb(7 6 10 / 0.12) 64%,
+      rgb(7 6 10 / 0) 82%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(7 6 10 / 0.22) 0%,
+      rgb(7 6 10 / 0) 22%,
+      rgb(7 6 10 / 0) 62%,
+      rgb(7 6 10 / 0.5) 100%
+    );
+}
+
+[data-theme="light"] .otk-hero-media img {
+  filter: brightness(1.06) saturate(1.03);
+}
+
+/* Integrated pillows band — appears in the lower hero area over the image */
+.otk-hero-pillows {
+  background-image:
+    radial-gradient(at 50% 20%, rgba(7,6,10,0.55) 0%, transparent 50%),
+    radial-gradient(at 50% 20%, rgba(247,244,239,0.35) 0%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+[data-theme="light"] .otk-hero-pillows {
+  background-image:
+    radial-gradient(at 50% 20%, rgba(247,244,239,0.15) 0%, transparent 50%),
+    radial-gradient(at 50% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+}
+
+.otk-hero-pillows .otk-eyebrow {
+  --otk-text: currentColor;
+}
+
 /* ------------------------------------------------------------------ *
  * Design tokens
  * Raw brand values are fixed. Semantic tokens below map them per theme.
