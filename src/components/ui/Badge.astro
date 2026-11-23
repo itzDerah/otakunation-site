@@ -7,7 +7,7 @@ interface Props {
 const { tone = "gold", class: className } = Astro.props;
 
 const tones = {
-  gold: "border-gold/40 bg-gold/10 text-gold",
+  gold: "border-gold/40 bg-gold/[0.08] text-gold",
   neutral: "border-border bg-surface text-text-muted",
   accent: "border-accent/40 bg-accent/10 text-accent",
 } as const;

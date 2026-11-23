@@ -75,6 +75,28 @@
   --otk-text: currentColor;
 }
 
+/* Desktop hero copy sits over a permanently dark cinematic artwork.
+ * Force light-on-dark tokens so light-theme text remains readable. */
+@media (min-width: 64rem) {
+  .otk-hero-copy {
+    --otk-text: #f7f4ef;
+    --otk-text-muted: #d6d0c4;
+    --otk-text-subtle: #b4acbf;
+    --otk-border-strong: rgb(247 244 239 / 0.28);
+    --otk-surface: rgb(247 244 239 / 0.08);
+    --otk-gold: #c09a54;
+  }
+
+  .otk-hero-frame,
+  .otk-hero-plate {
+    --otk-gold: #c09a54;
+  }
+
+  .otk-hero-plate {
+    color: #f7f4ef;
+  }
+}
+
 /* ------------------------------------------------------------------ *
  * Anime & Manga feature card
  * A cinematic editorial card built around the supplied trio artwork.
@@ -83,8 +105,8 @@
  * ------------------------------------------------------------------ */
 .otk-anime-card {
   --otk-anime-surface: #fbf6ec;
-  --otk-anime-line: rgb(154 122 62 / 0.55);
-  --otk-anime-line-soft: rgb(154 122 62 / 0.26);
+  --otk-anime-line: rgb(129 100 13 / 0.55);
+  --otk-anime-line-soft: rgb(129 100 13 / 0.24);
   --otk-anime-art-opacity: 0.24;
   --otk-anime-art-filter: saturate(0.82) contrast(0.94) brightness(1.06);
   --otk-anime-wash: linear-gradient(
@@ -98,7 +120,7 @@
   border-color: var(--otk-anime-line);
   box-shadow:
     0 1px 2px rgb(7 6 10 / 0.06),
-    0 30px 80px -50px rgb(122 93 38 / 0.65);
+    0 30px 80px -50px rgb(129 100 13 / 0.45);
 }
 
 [data-theme="dark"] .otk-anime-card {
@@ -622,7 +644,7 @@
   --otk-accent-hover: #8e0f1b;
   --otk-danger: #b81522;
   --otk-on-accent: #ffffff;
-  --otk-gold: #7a5d26;
+  --otk-gold: #81640d;
   --otk-on-gold: #ffffff;
   --otk-focus: #8e0f1b;
 }
