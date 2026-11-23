@@ -394,6 +394,100 @@
 }
 
 /* ------------------------------------------------------------------ *
+ * Compact Anime & Manga card below the desktop breakpoint
+ * The card ends after the description: the frame study and ecosystem
+ * footer are desktop-only. The copy moves into an icon/heading row and
+ * the artwork becomes a deliberately close-cropped top banner.
+ * ------------------------------------------------------------------ */
+@media (max-width: 63.999rem) {
+  .otk-anime-content {
+    padding-bottom: 3.5rem;
+  }
+
+  .otk-anime-copy {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: start;
+  }
+
+  .otk-anime-copy > .otk-anime-icon {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .otk-anime-copy > h3 {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .otk-anime-copy > .otk-anime-tagline {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0.5rem;
+  }
+
+  .otk-anime-copy > .otk-anime-desc {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 1.25rem;
+  }
+
+  .otk-anime-art-img {
+    height: clamp(8.75rem, 40vw, 13rem);
+    object-fit: cover;
+    object-position: 50% 12%;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 58%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 58%,
+      transparent 100%
+    );
+  }
+
+  .otk-anime-card {
+    --otk-anime-wash: linear-gradient(
+      to bottom,
+      rgb(251 246 236 / 0.34) 0%,
+      rgb(251 246 236 / 0.48) 4rem,
+      rgb(251 246 236 / 0.86) 8.5rem,
+      var(--otk-anime-surface) 11rem
+    );
+  }
+
+  [data-theme="dark"] .otk-anime-card {
+    --otk-anime-wash: linear-gradient(
+      to bottom,
+      rgb(7 6 10 / 0.4) 0%,
+      rgb(7 6 10 / 0.54) 4rem,
+      rgb(7 6 10 / 0.88) 8.5rem,
+      var(--otk-anime-surface) 11rem
+    );
+  }
+
+  .otk-anime-ribbon--br {
+    width: 4.5rem;
+    height: 3rem;
+  }
+
+  .otk-anime-waves {
+    height: 4.75rem;
+    opacity: 0.16;
+  }
+
+  [data-theme="dark"] .otk-anime-waves {
+    opacity: 0.22;
+  }
+}
+
+/* ------------------------------------------------------------------ *
  * Design tokens
  * Raw brand values are fixed. Semantic tokens below map them per theme.
  * ------------------------------------------------------------------ */
