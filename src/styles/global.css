@@ -76,6 +76,324 @@
 }
 
 /* ------------------------------------------------------------------ *
+ * Anime & Manga feature card
+ * A cinematic editorial card built around the supplied trio artwork.
+ * Light: ivory paper, gold rules, faded character watermark.
+ * Dark: charcoal surface, more visible artwork, same gold/crimson frame.
+ * ------------------------------------------------------------------ */
+.otk-anime-card {
+  --otk-anime-surface: #fbf6ec;
+  --otk-anime-line: rgb(154 122 62 / 0.55);
+  --otk-anime-line-soft: rgb(154 122 62 / 0.26);
+  --otk-anime-art-opacity: 0.24;
+  --otk-anime-art-filter: saturate(0.82) contrast(0.94) brightness(1.06);
+  --otk-anime-wash: linear-gradient(
+    to bottom,
+    rgb(251 246 236 / 0.34) 0%,
+    rgb(251 246 236 / 0.4) 6rem,
+    rgb(251 246 236 / 0.78) 11rem,
+    var(--otk-anime-surface) 14rem
+  );
+  background-color: var(--otk-anime-surface);
+  border-color: var(--otk-anime-line);
+  box-shadow:
+    0 1px 2px rgb(7 6 10 / 0.06),
+    0 30px 80px -50px rgb(122 93 38 / 0.65);
+}
+
+[data-theme="dark"] .otk-anime-card {
+  --otk-anime-surface: #0d0b12;
+  --otk-anime-line: rgb(212 179 117 / 0.45);
+  --otk-anime-line-soft: rgb(212 179 117 / 0.2);
+  --otk-anime-art-opacity: 0.3;
+  --otk-anime-art-filter: saturate(0.95) contrast(1) brightness(0.82);
+  --otk-anime-wash: linear-gradient(
+    to bottom,
+    rgb(7 6 10 / 0.38) 0%,
+    rgb(7 6 10 / 0.46) 6rem,
+    rgb(7 6 10 / 0.82) 11rem,
+    var(--otk-anime-surface) 14rem
+  );
+  background-color: var(--otk-anime-surface);
+  border-color: var(--otk-anime-line);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 0.35),
+    0 34px 90px -42px rgb(0 0 0 / 0.9);
+}
+
+/* Inner gold rule, inset from the heavy outer frame. */
+.otk-anime-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  z-index: 4;
+  border: 1px solid var(--otk-anime-line-soft);
+  border-radius: calc(1.6rem - 0.45rem);
+  pointer-events: none;
+}
+
+/* Character artwork ------------------------------------------------- */
+.otk-anime-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.otk-anime-art-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: center top;
+  opacity: var(--otk-anime-art-opacity);
+  filter: var(--otk-anime-art-filter);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 48%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 48%,
+    transparent 100%
+  );
+}
+
+.otk-anime-art-wash {
+  position: absolute;
+  inset: 0;
+  background: var(--otk-anime-wash);
+}
+
+/* Warm halo that sits just above the artwork. */
+.otk-anime-halo {
+  position: absolute;
+  z-index: 1;
+  top: -7rem;
+  right: -5rem;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgb(217 31 46 / 0.14) 0%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+[data-theme="dark"] .otk-anime-halo {
+  background: radial-gradient(
+    circle,
+    rgb(217 31 46 / 0.22) 0%,
+    transparent 68%
+  );
+}
+
+/* Seigaiha-inspired wave field at the foot of the card. */
+.otk-anime-waves {
+  position: absolute;
+  z-index: 2;
+  inset-inline: 0;
+  bottom: 0;
+  width: 100%;
+  height: 7rem;
+  color: var(--otk-gold);
+  opacity: 0.24;
+  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 10%, transparent 100%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .otk-anime-waves {
+  opacity: 0.32;
+}
+
+/* Crimson corner ribbons. */
+.otk-anime-ribbon {
+  position: absolute;
+  z-index: 3;
+  width: 7rem;
+  height: 3rem;
+  pointer-events: none;
+}
+
+.otk-anime-ribbon--tl {
+  top: 0;
+  left: 0;
+}
+
+.otk-anime-ribbon--br {
+  right: 0;
+  bottom: 0;
+  width: 9rem;
+  height: 5.5rem;
+}
+
+/* Status badge sits on a translucent plate so it survives the artwork. */
+.otk-anime-badge {
+  background-color: rgb(251 246 236 / 0.84);
+}
+
+[data-theme="dark"] .otk-anime-badge {
+  background-color: rgb(13 11 18 / 0.76);
+}
+
+/* Framed clapperboard icon. */
+.otk-anime-icon {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--otk-anime-line);
+  border-radius: 0.9rem;
+  background: rgb(251 246 236 / 0.84);
+  color: var(--otk-gold);
+  box-shadow:
+    0 1px 2px rgb(7 6 10 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.65);
+}
+
+[data-theme="dark"] .otk-anime-icon {
+  background: rgb(13 11 18 / 0.8);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.4),
+    inset 0 1px 0 rgb(247 244 239 / 0.08);
+}
+
+.otk-anime-icon-corner {
+  position: absolute;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  background: var(--otk-accent);
+}
+
+.otk-anime-icon-corner--tl {
+  top: -1px;
+  left: -1px;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.otk-anime-icon-corner--br {
+  right: -1px;
+  bottom: -1px;
+  clip-path: polygon(100% 100%, 100% 0, 0 100%);
+}
+
+/* Dark frame-study inset. The local gold token keeps the metal bright
+ * against the near-black panel in both themes. */
+.otk-anime-study {
+  --otk-gold: #c09a54;
+  border-color: rgb(192 154 84 / 0.55);
+  background-color: #08070c;
+  background-image: radial-gradient(
+    circle at 82% 8%,
+    rgb(217 31 46 / 0.16) 0%,
+    transparent 58%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgb(192 154 84 / 0.14),
+    0 20px 44px -28px rgb(0 0 0 / 0.85);
+}
+
+.otk-anime-study-corner {
+  position: absolute;
+  z-index: 2;
+  width: 4.5rem;
+  height: 3rem;
+  background: var(--otk-accent);
+  pointer-events: none;
+}
+
+.otk-anime-study-corner--tl {
+  top: 0;
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.otk-anime-study-corner--br {
+  right: 0;
+  bottom: 0;
+  clip-path: polygon(100% 100%, 100% 0, 0 100%);
+}
+
+@media (min-width: 40rem) {
+  .otk-anime-card {
+    --otk-anime-wash: linear-gradient(
+      to bottom,
+      rgb(251 246 236 / 0.36) 0%,
+      rgb(251 246 236 / 0.44) 12rem,
+      rgb(251 246 236 / 0.82) 20rem,
+      var(--otk-anime-surface) 25rem
+    );
+  }
+
+  [data-theme="dark"] .otk-anime-card {
+    --otk-anime-wash: linear-gradient(
+      to bottom,
+      rgb(7 6 10 / 0.4) 0%,
+      rgb(7 6 10 / 0.5) 12rem,
+      rgb(7 6 10 / 0.86) 20rem,
+      var(--otk-anime-surface) 25rem
+    );
+  }
+
+  .otk-anime-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+
+/* From lg the card becomes a two-column editorial spread. The artwork
+ * covers the whole card, and the wash protects the left-hand copy. */
+@media (min-width: 64rem) {
+  .otk-anime-card {
+    --otk-anime-wash:
+      linear-gradient(
+        100deg,
+        rgb(251 246 236 / 0.55) 0%,
+        rgb(251 246 236 / 0.38) 45%,
+        rgb(251 246 236 / 0.18) 75%,
+        rgb(251 246 236 / 0.3) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(251 246 236 / 0.08) 0%,
+        rgb(251 246 236 / 0.3) 38%,
+        rgb(251 246 236 / 0.72) 62%,
+        var(--otk-anime-surface) 82%
+      );
+  }
+
+  [data-theme="dark"] .otk-anime-card {
+    --otk-anime-wash:
+      linear-gradient(
+        100deg,
+        rgb(7 6 10 / 0.6) 0%,
+        rgb(7 6 10 / 0.4) 45%,
+        rgb(7 6 10 / 0.18) 75%,
+        rgb(7 6 10 / 0.28) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(7 6 10 / 0.12) 0%,
+        rgb(7 6 10 / 0.35) 38%,
+        rgb(7 6 10 / 0.78) 62%,
+        var(--otk-anime-surface) 82%
+      );
+  }
+}
+
+/* ------------------------------------------------------------------ *
  * Design tokens
  * Raw brand values are fixed. Semantic tokens below map them per theme.
  * ------------------------------------------------------------------ */
