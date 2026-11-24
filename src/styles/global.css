@@ -510,6 +510,56 @@
 }
 
 /* ------------------------------------------------------------------ *
+ * Community & Social card
+ * The 5-column ecosystem slot is narrower than the Anime & Manga
+ * feature, so the shared card keeps its single-column editorial flow
+ * at desktop instead of squeezing in the frame study. Everything else
+ * — frame, artwork, badge, icon, ribbons, waves and typography — comes
+ * from the same Anime & Manga component styles above.
+ * ------------------------------------------------------------------ */
+@media (min-width: 64rem) {
+  .otk-community-card .otk-community-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .otk-community-card .otk-anime-study {
+    display: none;
+  }
+}
+
+/* On the narrowest phones the Community title is longer than the
+ * Anime & Manga one, so the icon moves above it rather than forcing a
+ * mid-word break beside the icon. */
+@media (max-width: 22.4375rem) {
+  .otk-community-card .otk-anime-copy {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .otk-community-card .otk-anime-copy > .otk-anime-icon {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .otk-community-card .otk-anime-copy > h3 {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0.75rem;
+  }
+
+  .otk-community-card .otk-anime-copy > .otk-anime-tagline {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 0.5rem;
+  }
+
+  .otk-community-card .otk-anime-copy > .otk-anime-desc {
+    grid-column: 1;
+    grid-row: 4;
+    margin-top: 1.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------ *
  * Design tokens
  * Raw brand values are fixed. Semantic tokens below map them per theme.
  * ------------------------------------------------------------------ */
