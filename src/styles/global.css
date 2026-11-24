@@ -560,6 +560,30 @@
 }
 
 /* ------------------------------------------------------------------ *
+ * Guilds & Events artwork
+ * The festival scene carries much more fine detail than the character
+ * artwork, so it needs more exposure to read at all. It also fills the
+ * card height at desktop, where the Anime & Manga square crop would
+ * leave most of the scene hidden behind the wash. Frame, mask and wash
+ * remain identical to the Anime & Manga card.
+ * ------------------------------------------------------------------ */
+.otk-guilds-card {
+  --otk-anime-art-opacity: 0.55;
+}
+
+[data-theme="dark"] .otk-guilds-card {
+  --otk-anime-art-opacity: 0.62;
+}
+
+@media (min-width: 64rem) {
+  .otk-guilds-card .otk-anime-art-img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+}
+
+/* ------------------------------------------------------------------ *
  * Design tokens
  * Raw brand values are fixed. Semantic tokens below map them per theme.
  * ------------------------------------------------------------------ */

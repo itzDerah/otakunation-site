@@ -18,7 +18,7 @@ const wavePatternId = `otk-seigaiha-${area.id}`;
   id={area.id}
   aria-labelledby={`${area.id}-title`}
   class:list={[
-    "otk-anime-card otk-anime-compact group relative overflow-hidden rounded-[1.6rem] border",
+    "otk-anime-card otk-anime-compact otk-guilds-card group relative overflow-hidden rounded-[1.6rem] border",
     className,
   ]}
 >
@@ -147,20 +147,6 @@ const wavePatternId = `otk-seigaiha-${area.id}`;
         >
           {area.description}
         </p>
-
-        <div class="mt-7 hidden lg:block">
-          <p
-            class="flex items-start gap-3 text-[0.62rem] font-bold tracking-[0.18em] text-text uppercase sm:text-[0.68rem]"
-          >
-            <span
-              class="mt-1.5 size-2 shrink-0 rotate-45 bg-gold"
-              aria-hidden="true"></span>
-            <span class="min-w-0">A NATION IS ITS PEOPLE.</span>
-          </p>
-          <span
-            class="mt-3 block h-px w-full bg-gradient-to-r from-gold/60 via-gold/20 to-transparent"
-            aria-hidden="true"></span>
-        </div>
       </div>
 
       <!-- Frame study: the existing paper-cut illustration, reframed. -->
