@@ -1,0 +1,248 @@
+---
+import { CalendarCheck, Crown } from "@lucide/astro";
+import { Image } from "astro:assets";
+import guildsFestival from "../../assets/artwork/guilds-festival-original.jpg";
+import type { EcosystemArea } from "../../data/ecosystem";
+
+interface Props {
+  area: EcosystemArea;
+  class?: string;
+}
+
+const { area, class: className } = Astro.props;
+const taglineParts = area.tagline.split(" · ");
+const wavePatternId = `otk-seigaiha-${area.id}`;
+---
+
+<article
+  id={area.id}
+  aria-labelledby={`${area.id}-title`}
+  class:list={[
+    "otk-anime-card otk-anime-compact group relative overflow-hidden rounded-[1.6rem] border",
+    className,
+  ]}
+>
+  <!-- Festival artwork: a faded, theme-dependent watermark behind the copy. -->
+  <div class="otk-anime-art" aria-hidden="true">
+    <Image
+      src={guildsFestival}
+      alt=""
+      widths={[480, 768, 1200, 1568]}
+      sizes="(min-width: 1024px) 700px, 100vw"
+      format="webp"
+      quality={68}
+      loading="lazy"
+      decoding="async"
+      class="otk-anime-art-img"
+    />
+    <div class="otk-anime-art-wash"></div>
+  </div>
+
+  <!-- Decorative atmosphere, kept behind the content. -->
+  <div class="otk-anime-halo" aria-hidden="true"></div>
+
+  <svg
+    class="otk-anime-waves"
+    viewBox="0 0 560 112"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <pattern
+        id={wavePatternId}
+        width="56"
+        height="28"
+        patternUnits="userSpaceOnUse"
+      >
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M0 28a28 28 0 0 1 56 0"></path>
+          <path d="M0 28a20 20 0 0 1 40 0"></path>
+          <path d="M8 28a12 12 0 0 1 24 0"></path>
+          <path d="M-28 28a28 28 0 0 1 56 0"></path>
+          <path d="M28 28a28 28 0 0 1 56 0"></path>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="560" height="112" fill={`url(#${wavePatternId})`}></rect>
+  </svg>
+
+  <svg
+    class="otk-anime-ribbon otk-anime-ribbon--tl"
+    viewBox="0 0 180 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M0 0H180L0 100Z" fill="var(--otk-accent)"></path>
+    <path d="M0 100L180 0" stroke="var(--otk-gold)" stroke-width="2"></path>
+  </svg>
+  <svg
+    class="otk-anime-ribbon otk-anime-ribbon--br"
+    viewBox="0 0 180 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M180 100H0L180 0Z" fill="var(--otk-accent)"></path>
+    <path d="M180 0L0 100" stroke="var(--otk-gold)" stroke-width="2"></path>
+  </svg>
+
+  <div class="otk-anime-content relative z-10 flex h-full flex-col p-5 pt-12 sm:p-7 sm:pt-12 lg:p-8 lg:pt-14">
+    <header class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+      <div class="min-w-0">
+        <p
+          class="text-[0.68rem] font-bold tracking-[0.24em] text-text uppercase"
+        >
+          {area.number} <span class="text-text-subtle">/</span> Area
+        </p>
+        <span class="mt-2 block h-[3px] w-11 -skew-x-12 bg-accent"></span>
+      </div>
+
+      <span
+        class="otk-anime-badge inline-flex items-center gap-2 rounded-full border border-gold/50 px-3 py-1.5 text-[0.62rem] font-bold tracking-[0.14em] text-text uppercase shadow-sm backdrop-blur-sm sm:px-4 sm:text-[0.68rem]"
+      >
+        <CalendarCheck class="size-3.5 text-gold" aria-hidden="true" />
+        {area.status}
+      </span>
+    </header>
+
+    <div
+      class="otk-anime-compact-body mt-8 grid gap-7 sm:mt-10 lg:mt-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-stretch lg:gap-6 xl:gap-8"
+    >
+      <div class="otk-anime-copy flex min-w-0 flex-col">
+        <span class="otk-anime-icon relative" aria-hidden="true">
+          <Crown class="size-7" />
+          <span class="otk-anime-icon-corner otk-anime-icon-corner--tl"></span>
+          <span class="otk-anime-icon-corner otk-anime-icon-corner--br"></span>
+        </span>
+
+        <h3
+          id={`${area.id}-title`}
+          class="mt-6 text-[clamp(1.9rem,3.6vw,2.35rem)] leading-[0.98] font-extrabold tracking-[-0.04em] text-balance text-text"
+        >
+          {area.title}
+        </h3>
+
+        <p
+          class="otk-anime-tagline mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.68rem] font-semibold tracking-[0.2em] text-text-muted uppercase sm:text-xs"
+        >
+          {
+            taglineParts.map((part, index) => (
+              <span class="inline-flex items-center gap-2.5">
+                {part}
+                {index < taglineParts.length - 1 && (
+                  <>
+                    <span class="sr-only"> · </span>
+                    <span
+                      class="size-1 rounded-full bg-accent"
+                      aria-hidden="true"
+                    />
+                  </>
+                )}
+              </span>
+            ))
+          }
+        </p>
+
+        <p
+          class="otk-anime-desc mt-6 max-w-prose border-l-2 border-accent/70 pl-4 text-sm leading-relaxed text-text-muted sm:text-[0.95rem]"
+        >
+          {area.description}
+        </p>
+
+        <div class="mt-7 hidden lg:block">
+          <p
+            class="flex items-start gap-3 text-[0.62rem] font-bold tracking-[0.18em] text-text uppercase sm:text-[0.68rem]"
+          >
+            <span
+              class="mt-1.5 size-2 shrink-0 rotate-45 bg-gold"
+              aria-hidden="true"></span>
+            <span class="min-w-0">A NATION IS ITS PEOPLE.</span>
+          </p>
+          <span
+            class="mt-3 block h-px w-full bg-gradient-to-r from-gold/60 via-gold/20 to-transparent"
+            aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <!-- Frame study: the existing paper-cut illustration, reframed. -->
+      <div
+        class="otk-anime-study relative hidden min-h-[18rem] flex-col overflow-hidden rounded-xl border p-4 [--otk-gold:#C09A54] sm:min-h-[21rem] sm:p-5 lg:flex lg:h-full lg:min-h-0"
+        aria-hidden="true"
+      >
+        <div class="otk-grid-lines absolute inset-0 text-white/10"></div>
+        <div
+          class="absolute -top-12 -right-10 size-44 rounded-full bg-accent/20 blur-3xl"
+        >
+        </div>
+        <span class="otk-anime-study-corner otk-anime-study-corner--tl"></span>
+        <span class="otk-anime-study-corner otk-anime-study-corner--br"></span>
+
+        <div class="relative z-10 flex items-center gap-2 pt-6 text-gold">
+          <Crown class="size-3.5 shrink-0" />
+          <span
+            class="whitespace-nowrap text-[0.55rem] font-semibold tracking-[0.22em] uppercase sm:text-[0.6rem]"
+          >
+            Frame study / {area.number}
+          </span>
+        </div>
+
+        <div class="relative z-10 min-h-0 flex-1">
+          <div class="absolute inset-x-2 inset-y-2 sm:inset-x-4">
+            <div class="relative h-full w-full">
+              <div
+                class="absolute top-[9%] left-[3%] h-[58%] w-[40%] -rotate-6 border border-gold/40 bg-ink-800 p-1.5 shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+              >
+                <div
+                  class="h-[64%] bg-gradient-to-br from-crimson-500 to-crimson-700"
+                >
+                </div>
+                <div class="mt-2 h-px w-8 bg-gold/70"></div>
+                <div class="mt-1.5 h-px w-5 bg-white/25"></div>
+              </div>
+
+              <div
+                class="absolute top-[20%] left-[30%] h-[62%] w-[40%] rotate-2 border border-gold/40 bg-ink-700 p-1.5 shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+              >
+                <div
+                  class="relative grid h-[64%] place-items-center bg-ink-900"
+                >
+                  <span class="size-8 rounded-full border border-gold/50"></span>
+                  <span class="absolute size-1.5 rounded-full bg-accent"></span>
+                </div>
+                <div class="mt-2 h-px w-10 bg-white/20"></div>
+              </div>
+
+              <div
+                class="absolute top-[11%] right-[2%] h-[56%] w-[34%] rotate-[9deg] border border-gold/30 bg-ink-800 p-1.5 shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+              >
+                <div
+                  class="flex h-[64%] flex-col justify-end gap-1 bg-ink-900 p-2"
+                >
+                  <span class="h-1 w-full bg-gold/40"></span>
+                  <span class="h-1 w-2/3 bg-accent/70"></span>
+                  <span class="h-1 w-1/2 bg-white/15"></span>
+                </div>
+                <div class="mt-2 h-px w-6 bg-gold/40"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative z-10 flex items-end justify-between gap-3">
+          <span class="flex items-center gap-2">
+            <span
+              class="text-[0.5rem] tracking-[0.18em] text-paper-300 uppercase sm:text-[0.55rem]"
+            >
+              Guilds / Events
+            </span>
+            <span class="h-px w-6 bg-gold/60"></span>
+          </span>
+          <span
+            class="text-6xl leading-none font-extrabold text-white/10 sm:text-7xl"
+          >
+            {area.number}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
