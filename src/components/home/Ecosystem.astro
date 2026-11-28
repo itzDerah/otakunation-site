@@ -2,6 +2,7 @@
 import { Layers } from "@lucide/astro";
 import AnimeMangaCard from "./AnimeMangaCard.astro";
 import CommunitySocialCard from "./CommunitySocialCard.astro";
+import CreatorsArtistsCard from "./CreatorsArtistsCard.astro";
 import EcosystemCard from "./EcosystemCard.astro";
 import GuildsEventsCard from "./GuildsEventsCard.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
@@ -62,6 +63,8 @@ const spans: Record<EcosystemArea["key"], string> = {
             <CommunitySocialCard area={area} class={spans[area.key]} />
           ) : area.key === "guilds" ? (
             <GuildsEventsCard area={area} class={spans[area.key]} />
+          ) : area.key === "creators" ? (
+            <CreatorsArtistsCard area={area} class={spans[area.key]} />
           ) : (
             <EcosystemCard area={area} class={spans[area.key]} />
           )

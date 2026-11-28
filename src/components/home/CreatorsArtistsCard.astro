@@ -1,0 +1,153 @@
+---
+import { CalendarCheck, PenLine } from "@lucide/astro";
+import { Image } from "astro:assets";
+import creatorsStudio from "../../assets/artwork/creators-studio-original.jpg";
+import type { EcosystemArea } from "../../data/ecosystem";
+
+interface Props {
+  area: EcosystemArea;
+  class?: string;
+}
+
+const { area, class: className } = Astro.props;
+const taglineParts = area.tagline.split(" · ");
+const wavePatternId = `otk-seigaiha-${area.id}`;
+---
+
+<article
+  id={area.id}
+  aria-labelledby={`${area.id}-title`}
+  class:list={[
+    "otk-anime-card otk-anime-compact otk-creators-card group relative overflow-hidden rounded-[1.6rem] border",
+    className,
+  ]}
+>
+  <!-- Studio artwork: a faded, theme-dependent scene behind the copy. -->
+  <div class="otk-anime-art" aria-hidden="true">
+    <Image
+      src={creatorsStudio}
+      alt=""
+      widths={[480, 768, 1200, 1568]}
+      sizes="(min-width: 1024px) 700px, 100vw"
+      format="webp"
+      quality={68}
+      loading="lazy"
+      decoding="async"
+      class="otk-anime-art-img"
+    />
+    <div class="otk-anime-art-wash"></div>
+  </div>
+
+  <!-- Decorative atmosphere, kept behind the content. -->
+  <div class="otk-anime-halo" aria-hidden="true"></div>
+
+  <svg
+    class="otk-anime-waves"
+    viewBox="0 0 560 112"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <pattern
+        id={wavePatternId}
+        width="56"
+        height="28"
+        patternUnits="userSpaceOnUse"
+      >
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M0 28a28 28 0 0 1 56 0"></path>
+          <path d="M0 28a20 20 0 0 1 40 0"></path>
+          <path d="M8 28a12 12 0 0 1 24 0"></path>
+          <path d="M-28 28a28 28 0 0 1 56 0"></path>
+          <path d="M28 28a28 28 0 0 1 56 0"></path>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="560" height="112" fill={`url(#${wavePatternId})`}></rect>
+  </svg>
+
+  <svg
+    class="otk-anime-ribbon otk-anime-ribbon--tl"
+    viewBox="0 0 180 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M0 0H180L0 100Z" fill="var(--otk-accent)"></path>
+    <path d="M0 100L180 0" stroke="var(--otk-gold)" stroke-width="2"></path>
+  </svg>
+  <svg
+    class="otk-anime-ribbon otk-anime-ribbon--br"
+    viewBox="0 0 180 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M180 100H0L180 0Z" fill="var(--otk-accent)"></path>
+    <path d="M180 0L0 100" stroke="var(--otk-gold)" stroke-width="2"></path>
+  </svg>
+
+  <div class="otk-anime-content relative z-10 flex h-full flex-col p-5 pt-12 sm:p-7 sm:pt-12 lg:p-8 lg:pt-14 lg:pb-16">
+    <header class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+      <div class="min-w-0">
+        <p
+          class="text-[0.68rem] font-bold tracking-[0.24em] text-text uppercase"
+        >
+          {area.number} <span class="text-text-subtle">/</span> Area
+        </p>
+        <span class="mt-2 block h-[3px] w-11 -skew-x-12 bg-accent"></span>
+      </div>
+
+      <span
+        class="otk-anime-badge inline-flex items-center gap-2 rounded-full border border-gold/50 px-3 py-1.5 text-[0.62rem] font-bold tracking-[0.14em] text-text uppercase shadow-sm backdrop-blur-sm sm:px-4 sm:text-[0.68rem]"
+      >
+        <CalendarCheck class="size-3.5 text-gold" aria-hidden="true" />
+        {area.status}
+      </span>
+    </header>
+
+    <div
+      class="otk-anime-compact-body mt-8 grid gap-7 sm:mt-10 lg:mt-24"
+    >
+      <div class="otk-anime-copy flex min-w-0 flex-col">
+        <span class="otk-anime-icon relative" aria-hidden="true">
+          <PenLine class="size-7" />
+          <span class="otk-anime-icon-corner otk-anime-icon-corner--tl"></span>
+          <span class="otk-anime-icon-corner otk-anime-icon-corner--br"></span>
+        </span>
+
+        <h3
+          id={`${area.id}-title`}
+          class="mt-6 text-[clamp(1.9rem,3.6vw,2.35rem)] leading-[0.98] font-extrabold tracking-[-0.04em] text-balance text-text"
+        >
+          {area.title}
+        </h3>
+
+        <p
+          class="otk-anime-tagline mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.68rem] font-semibold tracking-[0.2em] text-text-muted uppercase sm:text-xs"
+        >
+          {
+            taglineParts.map((part, index) => (
+              <span class="inline-flex items-center gap-2.5">
+                {part}
+                {index < taglineParts.length - 1 && (
+                  <>
+                    <span class="sr-only"> · </span>
+                    <span
+                      class="size-1 rounded-full bg-accent"
+                      aria-hidden="true"
+                    />
+                  </>
+                )}
+              </span>
+            ))
+          }
+        </p>
+
+        <p
+          class="otk-anime-desc mt-6 max-w-prose border-l-2 border-accent/70 pl-4 text-sm leading-relaxed text-text-muted sm:text-[0.95rem]"
+        >
+          {area.description}
+        </p>
+      </div>
+    </div>
+  </div>
+</article>

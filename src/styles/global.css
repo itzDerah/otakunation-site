@@ -510,7 +510,8 @@
 }
 
 /* ------------------------------------------------------------------ *
- * Compact ecosystem cards (Community & Social, Guilds & Events)
+ * Compact ecosystem cards (Community & Social, Guilds & Events,
+ * Creators & Artists)
  * These 4/5-column slots are narrower than the Anime & Manga feature,
  * so the shared card keeps its single-column editorial flow at desktop
  * instead of squeezing in the frame study. Everything else — frame,
@@ -527,9 +528,9 @@
   }
 }
 
-/* On the narrowest phones the Community and Guilds titles are longer
- * than the Anime & Manga one, so the icon moves above the title rather
- * than forcing a mid-word break beside the icon. */
+/* On the narrowest phones the Community, Guilds and Creators titles are
+ * longer than the Anime & Manga one, so the icon moves above the title
+ * rather than forcing a mid-word break beside the icon. */
 @media (max-width: 22.4375rem) {
   .otk-anime-compact .otk-anime-copy {
     grid-template-columns: minmax(0, 1fr);
@@ -580,6 +581,29 @@
     height: 100%;
     object-fit: cover;
     object-position: 50% 50%;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Creators & Artists artwork
+ * The production studio is a wide, detailed scene. It shares the
+ * festival artwork's exposure, and a desktop crop centred on the
+ * artist at the drawing tablet keeps the subject readable.
+ * Frame, mask and wash remain identical to the Anime & Manga card.
+ * ------------------------------------------------------------------ */
+.otk-creators-card {
+  --otk-anime-art-opacity: 0.55;
+}
+
+[data-theme="dark"] .otk-creators-card {
+  --otk-anime-art-opacity: 0.62;
+}
+
+@media (min-width: 64rem) {
+  .otk-creators-card .otk-anime-art-img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 45%;
   }
 }
 
